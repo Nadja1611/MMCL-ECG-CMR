@@ -1,0 +1,1258 @@
+Thu Nov  7 11:53:11 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 545.23.08              Driver Version: 545.23.08    CUDA Version: 12.3     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-PCIE-40GB          Off | 00000000:01:00.0 Off |                    0 |
+| N/A   48C    P0              39W / 250W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA A100-PCIE-40GB          Off | 00000000:81:00.0 Off |                    0 |
+| N/A   40C    P0              41W / 250W |      4MiB / 40960MiB |      4%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+python3 /gpfs/data/fs72515/nadja_g/MMCL-ECG-CMR/mae_ng/main_finetune.py --seed 0 --downstream_task classification --jitter_sigma 0.2 --rescaling_sigma 0.5 --ft_surr_phase_noise 0.075 --input_channels 1 --input_electrodes 12 --time_steps 2500 --patch_height 1 --patch_width 100 --model vit_tiny_patchX --batch_size 8 --epochs 400 --patience 25 --max_delta 0.25 --accum_iter 1 --drop_path 0.2 --weight_decay 0.2 --layer_decay 0.5 --min_lr 0.0 --blr 3e-6 --warmup_epoch 5 --smoothing 0.1 --data_path /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/train/tensor.pt --labels_path /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/train/labels.pt --val_data_path /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/val/tensor.pt --val_labels_path /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/val/labels.pt --nb_classes 2 --log_dir /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/ --num_workers 24 --finetune /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/EKGMRIProjekt/model_weights/signal_encoder_mmcl_wo_mdm.pth --pos_label 1 --global_pool --attention_pool --wandb --wandb_project MAE_ECG_Fin_Tiny_LV --output_dir /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints//weights/
+job dir: /gpfs/data/fs72515/nadja_g/MMCL-ECG-CMR/mae_ng
+Namespace(lower_bnd=0,
+upper_bnd=0,
+batch_size=8,
+epochs=400,
+accum_iter=1,
+model='vit_tiny_patchX',
+input_channels=1,
+input_electrodes=12,
+time_steps=2500,
+input_size=(1,
+12,
+2500),
+patch_height=1,
+patch_width=100,
+patch_size=(1,
+100),
+drop_path=0.2,
+masking_blockwise=False,
+mask_ratio=0.0,
+mask_c_ratio=0.0,
+mask_t_ratio=0.0,
+jitter_sigma=0.2,
+rescaling_sigma=0.5,
+ft_surr_phase_noise=0.075,
+freq_shift_delta=0.005,
+color_jitter=None,
+aa='rand-m9-mstd0.5-inc1',
+clip_grad=None,
+weight_decay=0.2,
+lr=None,
+blr=3e-06,
+layer_decay=0.5,
+min_lr=0.0,
+warmup_epochs=5,
+patience=25.0,
+max_delta=0.25,
+smoothing=0.1,
+reprob=0.25,
+remode='pixel',
+recount=1,
+resplit=False,
+mixup=0,
+cutmix=0,
+cutmix_minmax=None,
+mixup_prob=1.0,
+mixup_switch_prob=0.5,
+mixup_mode='batch',
+finetune='/gpfs/data/fs72515/nadja_g/ECGMRIProjekt/EKGMRIProjekt/model_weights/signal_encoder_mmcl_wo_mdm.pth',
+global_pool='attention_pool',
+attention_pool=True,
+downstream_task='classification',
+data_path='/gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/train/tensor.pt',
+labels_path='/gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/train/labels.pt',
+labels_mask_path='',
+val_data_path='/gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/val/tensor.pt',
+val_labels_path='/gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/val/labels.pt',
+val_labels_mask_path='',
+nb_classes=2,
+pos_label=1,
+output_dir='/gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints//weights/',
+log_dir='/gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/',
+wandb=True,
+wandb_project='MAE_ECG_Fin_Tiny_LV',
+wandb_id='',
+device='cuda',
+seed=0,
+resume='',
+plot_attention_map=False,
+plot_embeddings=False,
+embeddings_dir='',
+predictions_dir='',
+start_epoch=0,
+eval=False,
+dist_eval=False,
+num_workers=24,
+pin_mem=True,
+world_size=1,
+local_rank=-1,
+dist_on_itp=False,
+dist_url='env://',
+distributed=False)
+Training set size:  50
+Validation set size:  18
+Sampler_train = <torch.utils.data.distributed.DistributedSampler object at 0x14fc01589f60>
+Load pre-trained checkpoint from: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/EKGMRIProjekt/model_weights/signal_encoder_mmcl_wo_mdm.pth
+_IncompatibleKeys(missing_keys=['fc_norm.weight', 'fc_norm.bias', 'head.weight', 'head.bias', 'attention_pool.in_proj_weight', 'attention_pool.in_proj_bias', 'attention_pool.out_proj.weight', 'attention_pool.out_proj.bias'], unexpected_keys=['norm.weight', 'norm.bias'])
+Model = VisionTransformer(
+  (patch_embed): PatchEmbed(
+    (proj): Conv2d(1, 384, kernel_size=(1, 100), stride=(1, 100))
+    (norm): Identity()
+  )
+  (pos_drop): Dropout(p=0.0, inplace=False)
+  (blocks): Sequential(
+    (0): Block(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): Identity()
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU()
+        (drop1): Dropout(p=0.0, inplace=False)
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): Identity()
+    )
+    (1): Block(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): DropPath(drop_prob=0.100)
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU()
+        (drop1): Dropout(p=0.0, inplace=False)
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): DropPath(drop_prob=0.100)
+    )
+    (2): Block(
+      (norm1): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (attn): Attention(
+        (qkv): Linear(in_features=384, out_features=1152, bias=True)
+        (attn_drop): Dropout(p=0.0, inplace=False)
+        (proj): Linear(in_features=384, out_features=384, bias=True)
+        (proj_drop): Dropout(p=0.0, inplace=False)
+      )
+      (ls1): Identity()
+      (drop_path1): DropPath(drop_prob=0.200)
+      (norm2): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+      (mlp): Mlp(
+        (fc1): Linear(in_features=384, out_features=1536, bias=True)
+        (act): GELU()
+        (drop1): Dropout(p=0.0, inplace=False)
+        (fc2): Linear(in_features=1536, out_features=384, bias=True)
+        (drop2): Dropout(p=0.0, inplace=False)
+      )
+      (ls2): Identity()
+      (drop_path2): DropPath(drop_prob=0.200)
+    )
+  )
+  (fc_norm): LayerNorm((384,), eps=1e-06, elementwise_affine=True)
+  (head): Linear(in_features=384, out_features=2, bias=True)
+  (attention_pool): MultiheadAttention(
+    (out_proj): NonDynamicallyQuantizableLinear(in_features=384, out_features=384, bias=True)
+  )
+)
+number of params (M): 6.07
+base lr: 3.00e-06
+actual lr: 6.00e-06
+accumulate grad iterations: 1
+effective batch size: 8
+criterion = CrossEntropyLoss()
+Start training for 400 epochs
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [0]  [0/7]  eta: 0:00:14  lr: 0.000000  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 81.2500 (81.2500)  auprc: 89.2857 (89.2857)  loss: 0.6904 (0.6904)  time: 2.0885  data: 0.6762  max mem: 248
+Epoch: [0]  [6/7]  eta: 0:00:00  lr: 0.000001  acc: 50.0000 (56.0000)  f1: 0.0000 (8.0000)  auroc: 46.6667 (48.7333)  auprc: 45.8333 (55.6635)  loss: 0.6904 (0.6855)  time: 0.3168  data: 0.0966  max mem: 313
+Epoch: [0] Total time: 0:00:02 (0.3340 s / it)
+Averaged stats: lr: 0.000001  acc: 50.0000 (56.0000)  f1: 0.0000 (8.0000)  auroc: 46.6667 (48.7333)  auprc: 45.8333 (55.6635)  loss: 0.6904 (0.6855)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:01  loss: 0.7116 (0.7116)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 56.2500 (56.2500)  auprc: 66.7857 (66.7857)  time: 0.6448  data: 0.6331  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6305 (0.6382)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 8.3333 (28.7037)  auprc: 20.8333 (38.9418)  time: 0.2207  data: 0.2111  max mem: 313
+Test: Total time: 0:00:00 (0.2789 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 34.722 AUPRC 30.371 loss 0.638
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 34.7% / 30.4%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 34.72% / 30.37%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [1]  [0/7]  eta: 0:00:05  lr: 0.000001  acc: 25.0000 (25.0000)  f1: 0.0000 (0.0000)  auroc: 66.6667 (66.6667)  auprc: 89.7222 (89.7222)  loss: 0.8073 (0.8073)  time: 0.8111  data: 0.7857  max mem: 313
+Epoch: [1]  [6/7]  eta: 0:00:00  lr: 0.000002  acc: 62.5000 (56.0000)  f1: 0.0000 (0.0000)  auroc: 50.0000 (46.0190)  auprc: 41.6667 (48.7022)  loss: 0.6568 (0.6896)  time: 0.1315  data: 0.1123  max mem: 313
+Epoch: [1] Total time: 0:00:01 (0.1558 s / it)
+Averaged stats: lr: 0.000002  acc: 62.5000 (56.0000)  f1: 0.0000 (0.0000)  auroc: 50.0000 (46.0190)  auprc: 41.6667 (48.7022)  loss: 0.6568 (0.6896)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7125 (0.7125)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 56.2500 (56.2500)  auprc: 66.7857 (66.7857)  time: 0.8623  data: 0.8504  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6290 (0.6360)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 8.3333 (28.7037)  auprc: 20.8333 (38.9418)  time: 0.2922  data: 0.2835  max mem: 313
+Test: Total time: 0:00:01 (0.3491 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 34.722 AUPRC 30.371 loss 0.636
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 34.7% / 30.4%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 34.72% / 30.37%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [2]  [0/7]  eta: 0:00:05  lr: 0.000002  acc: 37.5000 (37.5000)  f1: 0.0000 (0.0000)  auroc: 37.5000 (37.5000)  auprc: 49.2857 (49.2857)  loss: 0.7418 (0.7418)  time: 0.8381  data: 0.8127  max mem: 313
+Epoch: [2]  [6/7]  eta: 0:00:00  lr: 0.000003  acc: 62.5000 (58.0000)  f1: 0.0000 (0.0000)  auroc: 37.5000 (46.0476)  auprc: 50.0000 (50.9778)  loss: 0.7028 (0.6917)  time: 0.1350  data: 0.1161  max mem: 313
+Epoch: [2] Total time: 0:00:01 (0.1577 s / it)
+Averaged stats: lr: 0.000003  acc: 62.5000 (58.0000)  f1: 0.0000 (0.0000)  auroc: 37.5000 (46.0476)  auprc: 50.0000 (50.9778)  loss: 0.7028 (0.6917)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7139 (0.7139)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 56.2500 (56.2500)  auprc: 66.7857 (66.7857)  time: 0.8290  data: 0.8170  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6259 (0.6313)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 16.6667 (32.4074)  auprc: 22.5000 (39.6825)  time: 0.2809  data: 0.2724  max mem: 313
+Test: Total time: 0:00:01 (0.3460 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 37.500 AUPRC 31.288 loss 0.631
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 37.5% / 31.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 37.50% / 31.29%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [3]  [0/7]  eta: 0:00:05  lr: 0.000004  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 60.0000 (60.0000)  auprc: 53.1746 (53.1746)  loss: 0.6718 (0.6718)  time: 0.8346  data: 0.8083  max mem: 313
+Epoch: [3]  [6/7]  eta: 0:00:00  lr: 0.000005  acc: 62.5000 (60.0000)  f1: 0.0000 (4.5714)  auroc: 53.3333 (52.5333)  auprc: 53.1746 (51.9556)  loss: 0.6718 (0.6799)  time: 0.1344  data: 0.1155  max mem: 313
+Epoch: [3] Total time: 0:00:01 (0.1563 s / it)
+Averaged stats: lr: 0.000005  acc: 62.5000 (60.0000)  f1: 0.0000 (4.5714)  auroc: 53.3333 (52.5333)  auprc: 53.1746 (51.9556)  loss: 0.6718 (0.6799)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7147 (0.7147)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 62.5000 (62.5000)  auprc: 70.9524 (70.9524)  time: 0.8659  data: 0.8526  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6225 (0.6253)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 16.6667 (35.1852)  auprc: 22.5000 (41.5344)  time: 0.2932  data: 0.2842  max mem: 313
+Test: Total time: 0:00:01 (0.3539 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 41.667 AUPRC 33.262 loss 0.625
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 41.7% / 33.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 41.67% / 33.26%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [4]  [0/7]  eta: 0:00:05  lr: 0.000005  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  loss: 0.6908 (0.6908)  time: 0.8356  data: 0.8063  max mem: 313
+Epoch: [4]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (58.0000)  f1: 0.0000 (0.0000)  auroc: 41.6667 (48.0000)  auprc: 50.0000 (51.0641)  loss: 0.6612 (0.6859)  time: 0.1348  data: 0.1152  max mem: 313
+Epoch: [4] Total time: 0:00:01 (0.1567 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (58.0000)  f1: 0.0000 (0.0000)  auroc: 41.6667 (48.0000)  auprc: 50.0000 (51.0641)  loss: 0.6612 (0.6859)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7132 (0.7132)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 56.2500 (56.2500)  auprc: 69.1667 (69.1667)  time: 0.8118  data: 0.7998  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6213 (0.6218)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (39.8148)  auprc: 26.7857 (42.6455)  time: 0.2750  data: 0.2666  max mem: 313
+Test: Total time: 0:00:01 (0.3371 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 44.444 AUPRC 34.235 loss 0.622
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 44.4% / 34.2%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 44.44% / 34.24%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [5]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 13.3333 (13.3333)  auprc: 30.2778 (30.2778)  loss: 0.7233 (0.7233)  time: 0.8461  data: 0.8228  max mem: 313
+Epoch: [5]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 50.0000 (58.0000)  f1: 0.0000 (0.0000)  auroc: 53.3333 (47.6667)  auprc: 50.0000 (55.3365)  loss: 0.6799 (0.6796)  time: 0.1366  data: 0.1176  max mem: 313
+Epoch: [5] Total time: 0:00:01 (0.1639 s / it)
+Averaged stats: lr: 0.000006  acc: 50.0000 (58.0000)  f1: 0.0000 (0.0000)  auroc: 53.3333 (47.6667)  auprc: 50.0000 (55.3365)  loss: 0.6799 (0.6796)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7157 (0.7157)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 56.2500 (56.2500)  auprc: 69.1667 (69.1667)  time: 0.8493  data: 0.8376  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6165 (0.6150)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 41.6667 (43.5185)  auprc: 30.9524 (44.4974)  time: 0.2875  data: 0.2792  max mem: 313
+Test: Total time: 0:00:01 (0.3429 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 45.833 AUPRC 34.147 loss 0.615
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 45.8% / 34.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 45.83% / 34.24%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [6]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 37.5000 (37.5000)  auprc: 30.9524 (30.9524)  loss: 0.6546 (0.6546)  time: 0.8749  data: 0.8476  max mem: 313
+Epoch: [6]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (60.0000)  f1: nan (nan)  auroc: 37.5000 (51.1048)  auprc: 33.1349 (50.5841)  loss: 0.6849 (0.6541)  time: 0.1400  data: 0.1211  max mem: 313
+Epoch: [6] Total time: 0:00:01 (0.1643 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (60.0000)  f1: nan (nan)  auroc: 37.5000 (51.1048)  auprc: 33.1349 (50.5841)  loss: 0.6849 (0.6541)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7162 (0.7162)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 62.5000 (62.5000)  auprc: 77.5000 (77.5000)  time: 0.8391  data: 0.8283  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6152 (0.6122)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 37.5000 (44.4444)  auprc: 30.9524 (48.2011)  time: 0.2842  data: 0.2761  max mem: 313
+Test: Total time: 0:00:01 (0.3438 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 46.528 AUPRC 34.563 loss 0.612
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 46.5% / 34.6%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 46.53% / 34.56%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [7]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 83.3333 (83.3333)  auprc: 58.3333 (58.3333)  loss: 0.5965 (0.5965)  time: 0.8546  data: 0.8276  max mem: 313
+Epoch: [7]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (62.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (62.1333)  auprc: 58.3333 (61.3524)  loss: 0.6846 (0.6755)  time: 0.1375  data: 0.1183  max mem: 313
+Epoch: [7] Total time: 0:00:01 (0.1635 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (62.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (62.1333)  auprc: 58.3333 (61.3524)  loss: 0.6846 (0.6755)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7150 (0.7150)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 62.5000 (62.5000)  auprc: 77.5000 (77.5000)  time: 0.8423  data: 0.8300  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6156 (0.6100)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 41.6667 (46.2963)  auprc: 30.9524 (48.2011)  time: 0.2854  data: 0.2767  max mem: 313
+Test: Total time: 0:00:01 (0.3493 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 50.000 AUPRC 36.325 loss 0.610
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 50.0% / 36.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 50.00% / 36.33%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [8]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 33.3333 (33.3333)  auprc: 36.5079 (36.5079)  loss: 0.6883 (0.6883)  time: 0.8419  data: 0.8122  max mem: 313
+Epoch: [8]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (62.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (73.8667)  auprc: 81.6667 (73.9968)  loss: 0.6687 (0.6558)  time: 0.1359  data: 0.1161  max mem: 313
+Epoch: [8] Total time: 0:00:01 (0.1604 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (62.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (73.8667)  auprc: 81.6667 (73.9968)  loss: 0.6687 (0.6558)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7116 (0.7116)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (68.7500)  auprc: 81.2500 (81.2500)  time: 0.8451  data: 0.8317  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6171 (0.6090)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 30.9524 (49.8677)  time: 0.2863  data: 0.2773  max mem: 313
+Test: Total time: 0:00:01 (0.3479 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 50.000 AUPRC 36.822 loss 0.609
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 50.0% / 36.8%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 50.00% / 36.82%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [9]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 73.3333 (73.3333)  auprc: 80.9524 (80.9524)  loss: 0.6413 (0.6413)  time: 0.8381  data: 0.8110  max mem: 313
+Epoch: [9]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 50.0000 (62.0000)  f1: nan (nan)  auroc: 66.6667 (55.0667)  auprc: 77.5000 (60.3124)  loss: 0.6413 (0.6526)  time: 0.1352  data: 0.1159  max mem: 313
+Epoch: [9] Total time: 0:00:01 (0.1604 s / it)
+Averaged stats: lr: 0.000006  acc: 50.0000 (62.0000)  f1: nan (nan)  auroc: 66.6667 (55.0667)  auprc: 77.5000 (60.3124)  loss: 0.6413 (0.6526)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7098 (0.7098)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (68.7500)  auprc: 81.2500 (81.2500)  time: 0.8555  data: 0.8443  max mem: 313
+Test:  [2/3]  eta: 0:00:00  loss: 0.6169 (0.6059)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (45.3704)  auprc: 26.7857 (48.0159)  time: 0.2896  data: 0.2815  max mem: 313
+Test: Total time: 0:00:01 (0.3465 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 48.611 AUPRC 36.081 loss 0.606
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 48.6% / 36.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 50.00% / 36.82%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [10]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 66.6667 (66.6667)  auprc: 41.6667 (41.6667)  loss: 0.6233 (0.6233)  time: 0.8828  data: 0.8589  max mem: 314
+Epoch: [10]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 50.0000 (62.0000)  f1: 0.0000 (6.4000)  auroc: 56.2500 (49.6667)  auprc: 52.5000 (53.2857)  loss: 0.7136 (0.6839)  time: 0.1415  data: 0.1227  max mem: 314
+Epoch: [10] Total time: 0:00:01 (0.1672 s / it)
+Averaged stats: lr: 0.000006  acc: 50.0000 (62.0000)  f1: 0.0000 (6.4000)  auroc: 56.2500 (49.6667)  auprc: 52.5000 (53.2857)  loss: 0.7136 (0.6839)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7055 (0.7055)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (68.7500)  auprc: 81.2500 (81.2500)  time: 0.8492  data: 0.8360  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6194 (0.6062)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (45.3704)  auprc: 26.7857 (48.0159)  time: 0.2876  data: 0.2787  max mem: 314
+Test: Total time: 0:00:01 (0.3484 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 50.000 AUPRC 36.448 loss 0.606
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 50.0% / 36.4%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 50.00% / 36.82%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [11]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 0.0000 (0.0000)  auroc: 57.1429 (57.1429)  auprc: 25.0000 (25.0000)  loss: 0.5706 (0.5706)  time: 0.8841  data: 0.8569  max mem: 314
+Epoch: [11]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (62.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (71.3143)  auprc: 67.9167 (62.0413)  loss: 0.6486 (0.6535)  time: 0.1417  data: 0.1224  max mem: 314
+Epoch: [11] Total time: 0:00:01 (0.1687 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (62.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (71.3143)  auprc: 67.9167 (62.0413)  loss: 0.6486 (0.6535)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7043 (0.7043)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (68.7500)  auprc: 81.2500 (81.2500)  time: 0.8487  data: 0.8366  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6191 (0.6033)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (49.0741)  time: 0.2875  data: 0.2789  max mem: 314
+Test: Total time: 0:00:01 (0.3472 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 52.778 AUPRC 38.234 loss 0.603
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 52.8% / 38.2%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 52.78% / 38.23%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [12]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 53.3333 (53.3333)  auprc: 46.6667 (46.6667)  loss: 0.6678 (0.6678)  time: 0.8260  data: 0.7981  max mem: 314
+Epoch: [12]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 50.0000 (60.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.1333)  auprc: 68.0556 (74.6222)  loss: 0.6678 (0.6398)  time: 0.1334  data: 0.1140  max mem: 314
+Epoch: [12] Total time: 0:00:01 (0.1589 s / it)
+Averaged stats: lr: 0.000006  acc: 50.0000 (60.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.1333)  auprc: 68.0556 (74.6222)  loss: 0.6678 (0.6398)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7025 (0.7025)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (68.7500)  auprc: 81.2500 (81.2500)  time: 0.8412  data: 0.8293  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6197 (0.6010)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (49.0741)  time: 0.2847  data: 0.2765  max mem: 314
+Test: Total time: 0:00:01 (0.3433 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 51.389 AUPRC 37.628 loss 0.601
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 51.4% / 37.6%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 52.78% / 38.23%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [13]  [0/7]  eta: 0:00:04  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 80.0000 (80.0000)  auprc: 75.5556 (75.5556)  loss: 0.6369 (0.6369)  time: 0.7120  data: 0.6860  max mem: 314
+Epoch: [13]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (62.0000)  f1: nan (nan)  auroc: 75.0000 (65.5333)  auprc: 63.8889 (62.2921)  loss: 0.6369 (0.6299)  time: 0.1172  data: 0.0980  max mem: 314
+Epoch: [13] Total time: 0:00:01 (0.1434 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (62.0000)  f1: nan (nan)  auroc: 75.0000 (65.5333)  auprc: 63.8889 (62.2921)  loss: 0.6369 (0.6299)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7035 (0.7035)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8110  data: 0.7991  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6178 (0.5960)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.2747  data: 0.2664  max mem: 314
+Test: Total time: 0:00:01 (0.3360 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 51.389 AUPRC 38.422 loss 0.596
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 51.4% / 38.4%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 52.78% / 38.42%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [14]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 50.0000 (50.0000)  f1: 33.3333 (33.3333)  auroc: 53.3333 (53.3333)  auprc: 77.8333 (77.8333)  loss: 0.7392 (0.7392)  time: 0.8024  data: 0.7743  max mem: 314
+Epoch: [14]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (64.0000)  f1: nan (nan)  auroc: 58.3333 (62.6286)  auprc: 55.5556 (57.6279)  loss: 0.6170 (0.6342)  time: 0.1303  data: 0.1106  max mem: 314
+Epoch: [14] Total time: 0:00:01 (0.1578 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (64.0000)  f1: nan (nan)  auroc: 58.3333 (62.6286)  auprc: 55.5556 (57.6279)  loss: 0.6170 (0.6342)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7048 (0.7048)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8734  data: 0.8628  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6160 (0.5916)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.2957  data: 0.2876  max mem: 314
+Test: Total time: 0:00:01 (0.3560 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 52.778 AUPRC 39.028 loss 0.592
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 52.8% / 39.0%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 52.78% / 39.03%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [15]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 37.5000 (37.5000)  f1: 0.0000 (0.0000)  auroc: 53.3333 (53.3333)  auprc: 77.8333 (77.8333)  loss: 0.7451 (0.7451)  time: 0.8734  data: 0.8438  max mem: 314
+Epoch: [15]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (64.0000)  f1: nan (nan)  auroc: 60.0000 (71.6667)  auprc: 77.8333 (79.3803)  loss: 0.6458 (0.6160)  time: 0.1405  data: 0.1206  max mem: 314
+Epoch: [15] Total time: 0:00:01 (0.1667 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (64.0000)  f1: nan (nan)  auroc: 60.0000 (71.6667)  auprc: 77.8333 (79.3803)  loss: 0.6458 (0.6160)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7092 (0.7092)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.7611  data: 0.7488  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6116 (0.5852)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.2582  data: 0.2496  max mem: 314
+Test: Total time: 0:00:00 (0.3161 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 52.083 AUPRC 38.422 loss 0.585
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 52.1% / 38.4%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 52.78% / 39.03%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [16]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 25.0000 (25.0000)  f1: 0.0000 (0.0000)  auroc: 16.6667 (16.6667)  auprc: 64.9603 (64.9603)  loss: 0.8448 (0.8448)  time: 0.8109  data: 0.7812  max mem: 314
+Epoch: [16]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (64.0000)  f1: nan (nan)  auroc: 73.3333 (65.3333)  auprc: 64.9603 (65.5937)  loss: 0.6191 (0.6297)  time: 0.1315  data: 0.1116  max mem: 314
+Epoch: [16] Total time: 0:00:01 (0.1568 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (64.0000)  f1: nan (nan)  auroc: 73.3333 (65.3333)  auprc: 64.9603 (65.5937)  loss: 0.6191 (0.6297)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7115 (0.7115)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8458  data: 0.8345  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6089 (0.5812)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.2867  data: 0.2782  max mem: 314
+Test: Total time: 0:00:01 (0.3517 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 52.778 AUPRC 39.028 loss 0.581
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 52.8% / 39.0%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 52.78% / 39.03%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [17]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 80.0000 (80.0000)  auprc: 75.5556 (75.5556)  loss: 0.6247 (0.6247)  time: 0.8417  data: 0.8132  max mem: 314
+Epoch: [17]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (64.0000)  f1: nan (nan)  auroc: 43.7500 (46.4667)  auprc: 55.3571 (56.2540)  loss: 0.6544 (0.6314)  time: 0.1359  data: 0.1162  max mem: 314
+Epoch: [17] Total time: 0:00:01 (0.1628 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (64.0000)  f1: nan (nan)  auroc: 43.7500 (46.4667)  auprc: 55.3571 (56.2540)  loss: 0.6544 (0.6314)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7184 (0.7184)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8638  data: 0.8517  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6042 (0.5746)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.2923  data: 0.2839  max mem: 314
+Test: Total time: 0:00:01 (0.3564 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 54.167 AUPRC 41.806 loss 0.575
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 54.2% / 41.8%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 54.17% / 41.81%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [18]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 46.6667 (46.6667)  auprc: 41.1111 (41.1111)  loss: 0.6637 (0.6637)  time: 0.8126  data: 0.7877  max mem: 314
+Epoch: [18]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (64.0000)  f1: nan (nan)  auroc: 50.0000 (66.6667)  auprc: 72.2619 (71.8552)  loss: 0.6260 (0.6116)  time: 0.1317  data: 0.1126  max mem: 314
+Epoch: [18] Total time: 0:00:01 (0.1580 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (64.0000)  f1: nan (nan)  auroc: 50.0000 (66.6667)  auprc: 72.2619 (71.8552)  loss: 0.6260 (0.6116)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7207 (0.7207)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8329  data: 0.8208  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6029 (0.5707)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.2821  data: 0.2736  max mem: 314
+Test: Total time: 0:00:01 (0.3378 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 55.556 AUPRC 42.546 loss 0.571
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 55.6% / 42.5%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 55.56% / 42.55%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [19]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 37.5000 (37.5000)  f1: 0.0000 (0.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.7309 (0.7309)  time: 0.9239  data: 0.8944  max mem: 314
+Epoch: [19]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (64.0000)  f1: nan (nan)  auroc: 68.7500 (76.0667)  auprc: 81.2500 (77.8635)  loss: 0.6400 (0.6094)  time: 0.1475  data: 0.1278  max mem: 314
+Epoch: [19] Total time: 0:00:01 (0.1734 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (64.0000)  f1: nan (nan)  auroc: 68.7500 (76.0667)  auprc: 81.2500 (77.8635)  loss: 0.6400 (0.6094)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7164 (0.7164)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8385  data: 0.8256  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6058 (0.5709)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.2844  data: 0.2752  max mem: 314
+Test: Total time: 0:00:01 (0.3473 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 56.944 AUPRC 42.943 loss 0.571
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 56.9% / 42.9%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 56.94% / 42.94%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [20]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 0.0000 (0.0000)  auroc: 85.7143 (85.7143)  auprc: 50.0000 (50.0000)  loss: 0.5145 (0.5145)  time: 0.8143  data: 0.7863  max mem: 314
+Epoch: [20]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 50.0000 (62.0000)  f1: 0.0000 (0.0000)  auroc: 85.7143 (80.0476)  auprc: 92.5000 (73.6190)  loss: 0.6961 (0.6406)  time: 0.1319  data: 0.1124  max mem: 314
+Epoch: [20] Total time: 0:00:01 (0.1572 s / it)
+Averaged stats: lr: 0.000006  acc: 50.0000 (62.0000)  f1: 0.0000 (0.0000)  auroc: 85.7143 (80.0476)  auprc: 92.5000 (73.6190)  loss: 0.6961 (0.6406)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7178 (0.7178)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8959  data: 0.8831  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6058 (0.5676)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.3033  data: 0.2944  max mem: 314
+Test: Total time: 0:00:01 (0.3619 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 56.944 AUPRC 42.943 loss 0.568
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 56.9% / 42.9%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 56.94% / 42.94%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [21]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 70.0000 (70.0000)  loss: 0.5831 (0.5831)  time: 0.8046  data: 0.7780  max mem: 314
+Epoch: [21]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (64.0000)  f1: 0.0000 (8.0000)  auroc: 86.6667 (84.8000)  auprc: 86.6667 (78.1156)  loss: 0.6015 (0.6252)  time: 0.1306  data: 0.1112  max mem: 314
+Epoch: [21] Total time: 0:00:01 (0.1548 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (64.0000)  f1: 0.0000 (8.0000)  auroc: 86.6667 (84.8000)  auprc: 86.6667 (78.1156)  loss: 0.6015 (0.6252)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7107 (0.7107)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8374  data: 0.8256  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6096 (0.5686)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.7857 (50.7937)  time: 0.2835  data: 0.2752  max mem: 314
+Test: Total time: 0:00:01 (0.3462 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 56.944 AUPRC 42.943 loss 0.569
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 56.9% / 42.9%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 56.94% / 42.94%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [22]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 50.0000 (50.0000)  auroc: 66.6667 (66.6667)  auprc: 69.8413 (69.8413)  loss: 0.6253 (0.6253)  time: 0.7186  data: 0.6929  max mem: 314
+Epoch: [22]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (64.0000)  f1: 0.0000 (8.0000)  auroc: 68.7500 (70.8000)  auprc: 69.8413 (72.3968)  loss: 0.6327 (0.6413)  time: 0.1177  data: 0.0990  max mem: 314
+Epoch: [22] Total time: 0:00:00 (0.1414 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (64.0000)  f1: 0.0000 (8.0000)  auroc: 68.7500 (70.8000)  auprc: 69.8413 (72.3968)  loss: 0.6327 (0.6413)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.7028 (0.7028)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8593  data: 0.8475  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6153 (0.5708)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (51.8519)  time: 0.2911  data: 0.2825  max mem: 314
+Test: Total time: 0:00:01 (0.3447 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 58.333 AUPRC 43.401 loss 0.571
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 58.3% / 43.4%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 58.33% / 43.40%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [23]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 58.3333 (58.3333)  auprc: 41.6667 (41.6667)  loss: 0.5876 (0.5876)  time: 0.8039  data: 0.7783  max mem: 314
+Epoch: [23]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (64.0000)  f1: nan (nan)  auroc: 75.0000 (77.0667)  auprc: 70.0000 (73.4000)  loss: 0.5876 (0.5946)  time: 0.1305  data: 0.1112  max mem: 314
+Epoch: [23] Total time: 0:00:01 (0.1542 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (64.0000)  f1: nan (nan)  auroc: 75.0000 (77.0667)  auprc: 70.0000 (73.4000)  loss: 0.5876 (0.5946)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6913 (0.6913)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8553  data: 0.8429  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6253 (0.5769)  acc: 75.0000 (66.6667)  f1: nan (nan)  auroc: 50.0000 (55.5556)  auprc: 32.5000 (53.3333)  time: 0.2900  data: 0.2810  max mem: 314
+Test: Total time: 0:00:01 (0.3478 s / it)
+* Acc@1 66.667 F1 0.000 AUROC 59.722 AUPRC 43.935 loss 0.577
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 0.0% / 59.7% / 43.9%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 59.72% / 43.94%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [24]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 50.0000 (50.0000)  auroc: 80.0000 (80.0000)  auprc: 75.5556 (75.5556)  loss: 0.6164 (0.6164)  time: 0.8608  data: 0.8364  max mem: 314
+Epoch: [24]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (68.0000)  f1: nan (nan)  auroc: 68.7500 (69.3048)  auprc: 75.5556 (67.4444)  loss: 0.5980 (0.5900)  time: 0.1388  data: 0.1195  max mem: 314
+Epoch: [24] Total time: 0:00:01 (0.1651 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (68.0000)  f1: nan (nan)  auroc: 68.7500 (69.3048)  auprc: 75.5556 (67.4444)  loss: 0.5980 (0.5900)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6863 (0.6863)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 75.0000 (75.0000)  auprc: 87.5000 (87.5000)  time: 0.8410  data: 0.8283  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6310 (0.5791)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (55.5556)  auprc: 32.5000 (53.3333)  time: 0.2846  data: 0.2761  max mem: 314
+Test: Total time: 0:00:01 (0.3456 s / it)
+* Acc@1 61.111 F1 0.000 AUROC 59.722 AUPRC 43.935 loss 0.579
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 0.0% / 59.7% / 43.9%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 59.72% / 43.94%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [25]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.5288 (0.5288)  time: 0.7294  data: 0.7026  max mem: 314
+Epoch: [25]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (64.0000)  f1: nan (nan)  auroc: 87.5000 (78.2667)  auprc: 91.6667 (78.0000)  loss: 0.6128 (0.5899)  time: 0.1193  data: 0.1004  max mem: 314
+Epoch: [25] Total time: 0:00:01 (0.1445 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (64.0000)  f1: nan (nan)  auroc: 87.5000 (78.2667)  auprc: 91.6667 (78.0000)  loss: 0.6128 (0.5899)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6871 (0.6871)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (68.7500)  auprc: 81.2500 (81.2500)  time: 0.8525  data: 0.8405  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6312 (0.5754)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (52.7778)  auprc: 32.5000 (50.5556)  time: 0.2887  data: 0.2802  max mem: 314
+Test: Total time: 0:00:01 (0.3444 s / it)
+* Acc@1 61.111 F1 0.000 AUROC 61.111 AUPRC 45.602 loss 0.575
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 0.0% / 61.1% / 45.6%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 61.11% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [26]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 60.0000 (60.0000)  auprc: 50.0000 (50.0000)  loss: 0.6601 (0.6601)  time: 0.7327  data: 0.7090  max mem: 314
+Epoch: [26]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (66.0000)  f1: 0.0000 (16.0000)  auroc: 93.3333 (86.1333)  auprc: 96.6667 (84.8000)  loss: 0.6517 (0.6206)  time: 0.1203  data: 0.1013  max mem: 314
+Epoch: [26] Total time: 0:00:01 (0.1437 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (66.0000)  f1: 0.0000 (16.0000)  auroc: 93.3333 (86.1333)  auprc: 96.6667 (84.8000)  loss: 0.6517 (0.6206)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6897 (0.6897)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 68.7500 (68.7500)  auprc: 81.2500 (81.2500)  time: 0.8015  data: 0.7881  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6294 (0.5697)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (52.7778)  auprc: 32.5000 (50.5556)  time: 0.2718  data: 0.2627  max mem: 314
+Test: Total time: 0:00:00 (0.3274 s / it)
+* Acc@1 61.111 F1 0.000 AUROC 59.722 AUPRC 44.411 loss 0.570
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 0.0% / 59.7% / 44.4%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 61.11% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [27]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 0.0000 (0.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.5667 (0.5667)  time: 0.8771  data: 0.8507  max mem: 314
+Epoch: [27]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (68.0000)  f1: 0.0000 (26.6667)  auroc: 75.0000 (83.4667)  auprc: 100.0000 (85.3111)  loss: 0.6203 (0.6513)  time: 0.1404  data: 0.1216  max mem: 314
+Epoch: [27] Total time: 0:00:01 (0.1642 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (68.0000)  f1: 0.0000 (26.6667)  auroc: 75.0000 (83.4667)  auprc: 100.0000 (85.3111)  loss: 0.6203 (0.6513)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6864 (0.6864)  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.8516  data: 0.8417  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6322 (0.5694)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2882  data: 0.2806  max mem: 314
+Test: Total time: 0:00:01 (0.3510 s / it)
+* Acc@1 61.111 F1 0.000 AUROC 58.333 AUPRC 42.745 loss 0.569
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 0.0% / 58.3% / 42.7%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 0.00% / 61.11% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [28]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 50.0000 (50.0000)  f1: 33.3333 (33.3333)  auroc: 80.0000 (80.0000)  auprc: 87.6667 (87.6667)  loss: 0.7186 (0.7186)  time: 0.8165  data: 0.7904  max mem: 314
+Epoch: [28]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (70.0000)  f1: nan (nan)  auroc: 100.0000 (76.8000)  auprc: 100.0000 (79.0933)  loss: 0.5787 (0.5968)  time: 0.1325  data: 0.1130  max mem: 314
+Epoch: [28] Total time: 0:00:01 (0.1591 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (70.0000)  f1: nan (nan)  auroc: 100.0000 (76.8000)  auprc: 100.0000 (79.0933)  loss: 0.5787 (0.5968)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6828 (0.6828)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.8502  data: 0.8373  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6354 (0.5689)  acc: 62.5000 (66.6667)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2883  data: 0.2791  max mem: 314
+Test: Total time: 0:00:01 (0.3454 s / it)
+* Acc@1 66.667 F1 25.000 AUROC 58.333 AUPRC 42.745 loss 0.569
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 25.0% / 58.3% / 42.7%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 61.11% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [29]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 81.2500 (81.2500)  auprc: 85.4167 (85.4167)  loss: 0.6320 (0.6320)  time: 0.8504  data: 0.8207  max mem: 314
+Epoch: [29]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (74.0000)  f1: 50.0000 (34.1333)  auroc: 81.2500 (77.3429)  auprc: 86.6667 (74.2000)  loss: 0.6082 (0.6097)  time: 0.1372  data: 0.1173  max mem: 314
+Epoch: [29] Total time: 0:00:01 (0.1653 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (74.0000)  f1: 50.0000 (34.1333)  auroc: 81.2500 (77.3429)  auprc: 86.6667 (74.2000)  loss: 0.6082 (0.6097)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6798 (0.6798)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.8036  data: 0.7904  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6390 (0.5690)  acc: 62.5000 (66.6667)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2727  data: 0.2635  max mem: 314
+Test: Total time: 0:00:01 (0.3375 s / it)
+* Acc@1 66.667 F1 25.000 AUROC 58.333 AUPRC 42.745 loss 0.569
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 25.0% / 58.3% / 42.7%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 61.11% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [30]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 83.3333 (83.3333)  auprc: 58.3333 (58.3333)  loss: 0.5448 (0.5448)  time: 0.8373  data: 0.8076  max mem: 314
+Epoch: [30]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (70.0000)  f1: nan (nan)  auroc: 83.3333 (80.3809)  auprc: 58.3333 (70.6413)  loss: 0.6296 (0.5710)  time: 0.1358  data: 0.1154  max mem: 314
+Epoch: [30] Total time: 0:00:01 (0.1604 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (70.0000)  f1: nan (nan)  auroc: 83.3333 (80.3809)  auprc: 58.3333 (70.6413)  loss: 0.6296 (0.5710)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6734 (0.6734)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.7961  data: 0.7822  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6468 (0.5724)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2704  data: 0.2607  max mem: 314
+Test: Total time: 0:00:00 (0.3297 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 59.722 AUPRC 43.376 loss 0.572
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 59.7% / 43.4%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 61.11% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [31]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 37.5000 (37.5000)  f1: 28.5714 (28.5714)  auroc: 60.0000 (60.0000)  auprc: 76.8333 (76.8333)  loss: 0.7109 (0.7109)  time: 0.9442  data: 0.9147  max mem: 314
+Epoch: [31]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (72.0000)  f1: nan (nan)  auroc: 91.6667 (86.1333)  auprc: 86.6667 (87.4933)  loss: 0.5686 (0.5720)  time: 0.1506  data: 0.1307  max mem: 314
+Epoch: [31] Total time: 0:00:01 (0.1759 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (72.0000)  f1: nan (nan)  auroc: 91.6667 (86.1333)  auprc: 86.6667 (87.4933)  loss: 0.5686 (0.5720)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6729 (0.6729)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.6897  data: 0.6780  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6488 (0.5708)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2348  data: 0.2260  max mem: 314
+Test: Total time: 0:00:00 (0.2928 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.134 loss 0.571
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 61.11% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [32]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 50.0000 (50.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.5612 (0.5612)  time: 0.8937  data: 0.8665  max mem: 314
+Epoch: [32]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (72.0000)  f1: 40.0000 (36.3429)  auroc: 83.3333 (78.6667)  auprc: 81.6667 (76.0190)  loss: 0.6023 (0.5966)  time: 0.1434  data: 0.1238  max mem: 314
+Epoch: [32] Total time: 0:00:01 (0.1687 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (72.0000)  f1: 40.0000 (36.3429)  auroc: 83.3333 (78.6667)  auprc: 81.6667 (76.0190)  loss: 0.6023 (0.5966)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6779 (0.6779)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.8274  data: 0.8152  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6449 (0.5640)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2802  data: 0.2718  max mem: 314
+Test: Total time: 0:00:01 (0.3343 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 62.500 AUPRC 45.060 loss 0.564
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 62.5% / 45.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [33]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4840 (0.4840)  time: 0.8695  data: 0.8387  max mem: 314
+Epoch: [33]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (72.0000)  f1: 33.3333 (39.4667)  auroc: 86.6667 (84.5333)  auprc: 100.0000 (88.6190)  loss: 0.5861 (0.6352)  time: 0.1397  data: 0.1198  max mem: 314
+Epoch: [33] Total time: 0:00:01 (0.1654 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (72.0000)  f1: 33.3333 (39.4667)  auroc: 86.6667 (84.5333)  auprc: 100.0000 (88.6190)  loss: 0.5861 (0.6352)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6798 (0.6798)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.8399  data: 0.8263  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6440 (0.5598)  acc: 62.5000 (66.6667)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2845  data: 0.2755  max mem: 314
+Test: Total time: 0:00:01 (0.3476 s / it)
+* Acc@1 66.667 F1 25.000 AUROC 61.111 AUPRC 44.302 loss 0.560
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 66.7% / 25.0% / 61.1% / 44.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [34]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 37.5000 (37.5000)  f1: 44.4444 (44.4444)  auroc: 85.7143 (85.7143)  auprc: 98.2143 (98.2143)  loss: 0.8014 (0.8014)  time: 0.9094  data: 0.8807  max mem: 314
+Epoch: [34]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 100.0000 (74.0000)  f1: nan (nan)  auroc: 85.7143 (80.4571)  auprc: 98.2143 (78.6933)  loss: 0.5402 (0.5736)  time: 0.1453  data: 0.1258  max mem: 314
+Epoch: [34] Total time: 0:00:01 (0.1702 s / it)
+Averaged stats: lr: 0.000006  acc: 100.0000 (74.0000)  f1: nan (nan)  auroc: 85.7143 (80.4571)  auprc: 98.2143 (78.6933)  loss: 0.5402 (0.5736)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6687 (0.6687)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.6909  data: 0.6789  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6554 (0.5680)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2352  data: 0.2263  max mem: 314
+Test: Total time: 0:00:00 (0.2878 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.302 loss 0.568
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [35]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 50.0000 (50.0000)  f1: 0.0000 (0.0000)  auroc: 26.6667 (26.6667)  auprc: 33.7302 (33.7302)  loss: 0.7523 (0.7523)  time: 0.8454  data: 0.8174  max mem: 314
+Epoch: [35]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (70.0000)  f1: 50.0000 (40.0000)  auroc: 83.3333 (79.4000)  auprc: 89.2857 (81.7092)  loss: 0.6098 (0.5925)  time: 0.1363  data: 0.1168  max mem: 314
+Epoch: [35] Total time: 0:00:01 (0.1620 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (70.0000)  f1: 50.0000 (40.0000)  auroc: 83.3333 (79.4000)  auprc: 89.2857 (81.7092)  loss: 0.6098 (0.5925)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6671 (0.6671)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.7905  data: 0.7770  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6571 (0.5676)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2683  data: 0.2590  max mem: 314
+Test: Total time: 0:00:00 (0.3316 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.302 loss 0.568
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [36]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 87.5000 (87.5000)  auprc: 91.6667 (91.6667)  loss: 0.6083 (0.6083)  time: 0.8963  data: 0.8690  max mem: 314
+Epoch: [36]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (80.0000)  f1: nan (nan)  auroc: 87.5000 (70.0000)  auprc: 91.6667 (69.0667)  loss: 0.6083 (0.5582)  time: 0.1437  data: 0.1242  max mem: 314
+Epoch: [36] Total time: 0:00:01 (0.1696 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (80.0000)  f1: nan (nan)  auroc: 87.5000 (70.0000)  auprc: 91.6667 (69.0667)  loss: 0.6083 (0.5582)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6627 (0.6627)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.7858  data: 0.7723  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6612 (0.5675)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2667  data: 0.2575  max mem: 314
+Test: Total time: 0:00:00 (0.3283 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.302 loss 0.568
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [37]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4732 (0.4732)  time: 0.8539  data: 0.8265  max mem: 314
+Epoch: [37]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (80.0000)  f1: 66.6667 (58.1333)  auroc: 100.0000 (86.2000)  auprc: 100.0000 (87.8603)  loss: 0.5281 (0.5620)  time: 0.1374  data: 0.1181  max mem: 314
+Epoch: [37] Total time: 0:00:01 (0.1622 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (80.0000)  f1: 66.6667 (58.1333)  auroc: 100.0000 (86.2000)  auprc: 100.0000 (87.8603)  loss: 0.5281 (0.5620)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6613 (0.6613)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 62.5000 (62.5000)  auprc: 72.9167 (72.9167)  time: 0.8055  data: 0.7904  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6613 (0.5649)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 50.0000 (50.0000)  auprc: 32.5000 (46.8519)  time: 0.2729  data: 0.2635  max mem: 314
+Test: Total time: 0:00:01 (0.3363 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.302 loss 0.565
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [38]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 73.3333 (73.3333)  auprc: 85.2857 (85.2857)  loss: 0.6709 (0.6709)  time: 0.8513  data: 0.8242  max mem: 314
+Epoch: [38]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (82.0000)  f1: nan (nan)  auroc: 93.3333 (85.3333)  auprc: 91.6667 (88.7314)  loss: 0.5392 (0.5389)  time: 0.1372  data: 0.1178  max mem: 314
+Epoch: [38] Total time: 0:00:01 (0.1595 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (82.0000)  f1: nan (nan)  auroc: 93.3333 (85.3333)  auprc: 91.6667 (88.7314)  loss: 0.5392 (0.5389)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6611 (0.6611)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 68.7500 (68.7500)  auprc: 74.7024 (74.7024)  time: 0.8603  data: 0.8482  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6611 (0.5620)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (46.1640)  time: 0.2912  data: 0.2828  max mem: 314
+Test: Total time: 0:00:01 (0.3510 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.562
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [39]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4675 (0.4675)  time: 0.8344  data: 0.8063  max mem: 314
+Epoch: [39]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 62.5000 (72.0000)  f1: nan (nan)  auroc: 80.0000 (78.6667)  auprc: 90.2857 (78.4990)  loss: 0.5905 (0.5638)  time: 0.1350  data: 0.1152  max mem: 314
+Epoch: [39] Total time: 0:00:01 (0.1597 s / it)
+Averaged stats: lr: 0.000006  acc: 62.5000 (72.0000)  f1: nan (nan)  auroc: 80.0000 (78.6667)  auprc: 90.2857 (78.4990)  loss: 0.5905 (0.5638)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6652 (0.6652)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 68.7500 (68.7500)  auprc: 74.7024 (74.7024)  time: 0.9150  data: 0.9036  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6612 (0.5549)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (46.1640)  time: 0.3098  data: 0.3012  max mem: 314
+Test: Total time: 0:00:01 (0.3688 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.555
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [40]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 58.3333 (58.3333)  auprc: 64.2857 (64.2857)  loss: 0.5872 (0.5872)  time: 0.8191  data: 0.7891  max mem: 314
+Epoch: [40]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (78.0000)  f1: 66.6667 (39.4667)  auroc: 85.7143 (80.9143)  auprc: 75.0000 (75.7790)  loss: 0.5903 (0.5768)  time: 0.1332  data: 0.1128  max mem: 314
+Epoch: [40] Total time: 0:00:01 (0.1584 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (78.0000)  f1: 66.6667 (39.4667)  auroc: 85.7143 (80.9143)  auprc: 75.0000 (75.7790)  loss: 0.5903 (0.5768)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6700 (0.6700)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 68.7500 (68.7500)  auprc: 74.7024 (74.7024)  time: 0.7441  data: 0.7290  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6593 (0.5495)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (46.1640)  time: 0.2527  data: 0.2430  max mem: 314
+Test: Total time: 0:00:00 (0.3043 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.549
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [41]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 25.0000 (25.0000)  auprc: 24.2857 (24.2857)  loss: 0.6637 (0.6637)  time: 0.9621  data: 0.9367  max mem: 314
+Epoch: [41]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (76.0000)  f1: 0.0000 (35.0222)  auroc: 80.0000 (75.4667)  auprc: 91.6667 (79.4413)  loss: 0.6095 (0.6054)  time: 0.1532  data: 0.1338  max mem: 314
+Epoch: [41] Total time: 0:00:01 (0.1785 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (76.0000)  f1: 0.0000 (35.0222)  auroc: 80.0000 (75.4667)  auprc: 91.6667 (79.4413)  loss: 0.6095 (0.6054)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6729 (0.6729)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 68.7500 (68.7500)  auprc: 74.7024 (74.7024)  time: 0.9140  data: 0.9009  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6611 (0.5473)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (46.1640)  time: 0.3094  data: 0.3003  max mem: 314
+Test: Total time: 0:00:01 (0.3657 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.547
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [42]  [0/7]  eta: 0:00:07  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 50.0000 (50.0000)  auroc: 83.3333 (83.3333)  auprc: 75.0000 (75.0000)  loss: 0.5227 (0.5227)  time: 1.0080  data: 0.9803  max mem: 314
+Epoch: [42]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (76.0000)  f1: nan (nan)  auroc: 83.3333 (83.1333)  auprc: 83.3333 (84.2190)  loss: 0.5227 (0.5375)  time: 0.1600  data: 0.1401  max mem: 314
+Epoch: [42] Total time: 0:00:01 (0.1855 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (76.0000)  f1: nan (nan)  auroc: 83.3333 (83.1333)  auprc: 83.3333 (84.2190)  loss: 0.5227 (0.5375)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6584 (0.6584)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 68.7500 (68.7500)  auprc: 74.7024 (74.7024)  time: 0.9883  data: 0.9750  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6584 (0.5555)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (46.1640)  time: 0.3343  data: 0.3250  max mem: 314
+Test: Total time: 0:00:01 (0.3959 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.556
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [43]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 0.0000 (0.0000)  auroc: 91.6667 (91.6667)  auprc: 83.3333 (83.3333)  loss: 0.5215 (0.5215)  time: 0.9593  data: 0.9302  max mem: 314
+Epoch: [43]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (72.0000)  f1: 66.6667 (47.4667)  auroc: 87.5000 (81.2000)  auprc: 92.6667 (83.4933)  loss: 0.5643 (0.5744)  time: 0.1531  data: 0.1329  max mem: 314
+Epoch: [43] Total time: 0:00:01 (0.1780 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (72.0000)  f1: 66.6667 (47.4667)  auroc: 87.5000 (81.2000)  auprc: 92.6667 (83.4933)  loss: 0.5643 (0.5744)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6497 (0.6497)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 71.8750 (71.8750)  auprc: 74.7024 (74.7024)  time: 0.9625  data: 0.9496  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6497 (0.5608)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (50.4630)  auprc: 29.1667 (46.1640)  time: 0.3252  data: 0.3166  max mem: 314
+Test: Total time: 0:00:01 (0.3834 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.806 AUPRC 44.087 loss 0.561
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.8% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.60%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [44]  [0/7]  eta: 0:00:07  lr: 0.000006  acc: 25.0000 (25.0000)  f1: 0.0000 (0.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.7289 (0.7289)  time: 1.0603  data: 1.0317  max mem: 314
+Epoch: [44]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (76.0000)  f1: 66.6667 (57.3333)  auroc: 100.0000 (88.8000)  auprc: 100.0000 (85.8413)  loss: 0.5207 (0.5506)  time: 0.1674  data: 0.1474  max mem: 314
+Epoch: [44] Total time: 0:00:01 (0.1921 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (76.0000)  f1: 66.6667 (57.3333)  auroc: 100.0000 (88.8000)  auprc: 100.0000 (85.8413)  loss: 0.5207 (0.5506)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6417 (0.6417)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.9123  data: 0.8993  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6417 (0.5663)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.3088  data: 0.2998  max mem: 314
+Test: Total time: 0:00:01 (0.3666 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 62.500 AUPRC 45.754 loss 0.566
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 62.5% / 45.8%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 62.50% / 45.75%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [45]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4765 (0.4765)  time: 0.9272  data: 0.8998  max mem: 314
+Epoch: [45]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (82.0000)  f1: nan (nan)  auroc: 100.0000 (88.7333)  auprc: 100.0000 (87.7079)  loss: 0.4869 (0.5089)  time: 0.1488  data: 0.1286  max mem: 314
+Epoch: [45] Total time: 0:00:01 (0.1728 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (82.0000)  f1: nan (nan)  auroc: 100.0000 (88.7333)  auprc: 100.0000 (87.7079)  loss: 0.4869 (0.5089)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:03  loss: 0.6394 (0.6394)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 81.2500 (81.2500)  auprc: 85.4167 (85.4167)  time: 1.0461  data: 1.0320  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6394 (0.5665)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (54.6296)  auprc: 29.1667 (50.9259)  time: 0.3537  data: 0.3440  max mem: 314
+Test: Total time: 0:00:01 (0.4110 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 63.889 AUPRC 46.230 loss 0.566
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 63.9% / 46.2%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 63.89% / 46.23%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [46]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4273 (0.4273)  time: 0.9809  data: 0.9505  max mem: 314
+Epoch: [46]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (86.0000)  f1: 80.0000 (80.8000)  auroc: 100.0000 (90.8000)  auprc: 100.0000 (89.8889)  loss: 0.4875 (0.5266)  time: 0.1560  data: 0.1358  max mem: 314
+Epoch: [46] Total time: 0:00:01 (0.1814 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (86.0000)  f1: 80.0000 (80.8000)  auroc: 100.0000 (90.8000)  auprc: 100.0000 (89.8889)  loss: 0.4875 (0.5266)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6408 (0.6408)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 77.0833 (77.0833)  time: 0.7571  data: 0.7426  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6408 (0.5639)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (47.2222)  time: 0.2573  data: 0.2476  max mem: 314
+Test: Total time: 0:00:00 (0.3154 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 43.452 loss 0.564
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 43.5%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 63.89% / 46.23%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [47]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 66.6667 (66.6667)  auroc: 75.0000 (75.0000)  auprc: 70.0000 (70.0000)  loss: 0.5592 (0.5592)  time: 0.9108  data: 0.8824  max mem: 314
+Epoch: [47]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (78.0000)  f1: 66.6667 (65.6889)  auroc: 86.6667 (83.4667)  auprc: 91.6667 (79.6190)  loss: 0.5582 (0.5493)  time: 0.1462  data: 0.1261  max mem: 314
+Epoch: [47] Total time: 0:00:01 (0.1710 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (78.0000)  f1: 66.6667 (65.6889)  auroc: 86.6667 (83.4667)  auprc: 91.6667 (79.6190)  loss: 0.5582 (0.5493)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:03  loss: 0.6484 (0.6484)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 77.0833 (77.0833)  time: 1.0176  data: 1.0027  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6484 (0.5574)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (47.2222)  time: 0.3439  data: 0.3343  max mem: 314
+Test: Total time: 0:00:01 (0.4045 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 62.500 AUPRC 44.563 loss 0.557
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 62.5% / 44.6%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 63.89% / 46.23%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [48]  [0/7]  eta: 0:00:07  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 80.0000 (80.0000)  auprc: 75.5556 (75.5556)  loss: 0.5917 (0.5917)  time: 1.0082  data: 0.9817  max mem: 314
+Epoch: [48]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (82.0000)  f1: nan (nan)  auroc: 80.0000 (71.8000)  auprc: 95.0000 (71.2889)  loss: 0.5663 (0.5344)  time: 0.1602  data: 0.1403  max mem: 314
+Epoch: [48] Total time: 0:00:01 (0.1861 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (82.0000)  f1: nan (nan)  auroc: 80.0000 (71.8000)  auprc: 95.0000 (71.2889)  loss: 0.5663 (0.5344)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6482 (0.6482)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 81.2500 (81.2500)  auprc: 85.4167 (85.4167)  time: 0.9963  data: 0.9831  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6482 (0.5568)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (54.6296)  auprc: 29.1667 (50.9259)  time: 0.3367  data: 0.3278  max mem: 314
+Test: Total time: 0:00:01 (0.3923 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 65.278 AUPRC 46.861 loss 0.557
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 65.3% / 46.9%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [49]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 66.6667 (66.6667)  auroc: 91.6667 (91.6667)  auprc: 83.3333 (83.3333)  loss: 0.5090 (0.5090)  time: 0.9670  data: 0.9387  max mem: 314
+Epoch: [49]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (78.0000)  f1: 66.6667 (56.9905)  auroc: 91.6667 (75.4667)  auprc: 100.0000 (78.6667)  loss: 0.5090 (0.5591)  time: 0.1544  data: 0.1341  max mem: 314
+Epoch: [49] Total time: 0:00:01 (0.1800 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (78.0000)  f1: 66.6667 (56.9905)  auroc: 91.6667 (75.4667)  auprc: 100.0000 (78.6667)  loss: 0.5090 (0.5591)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6428 (0.6428)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 81.2500 (81.2500)  auprc: 85.4167 (85.4167)  time: 0.9146  data: 0.9023  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6428 (0.5607)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (54.6296)  auprc: 29.1667 (50.9259)  time: 0.3096  data: 0.3008  max mem: 314
+Test: Total time: 0:00:01 (0.3675 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 65.278 AUPRC 46.861 loss 0.561
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 65.3% / 46.9%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [50]  [0/7]  eta: 0:00:04  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.3850 (0.3850)  time: 0.7046  data: 0.6744  max mem: 314
+Epoch: [50]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (80.0000)  f1: 66.6667 (65.9556)  auroc: 93.7500 (87.2667)  auprc: 96.6667 (85.5111)  loss: 0.5635 (0.5420)  time: 0.1166  data: 0.0964  max mem: 314
+Epoch: [50] Total time: 0:00:01 (0.1440 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (80.0000)  f1: 66.6667 (65.9556)  auroc: 93.7500 (87.2667)  auprc: 96.6667 (85.5111)  loss: 0.5635 (0.5420)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6317 (0.6317)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 81.2500 (81.2500)  auprc: 85.4167 (85.4167)  time: 0.6921  data: 0.6792  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6317 (0.5735)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (54.6296)  auprc: 29.1667 (50.9259)  time: 0.2355  data: 0.2264  max mem: 314
+Test: Total time: 0:00:00 (0.2931 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 64.583 AUPRC 46.230 loss 0.574
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 64.6% / 46.2%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 25.00% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [51]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4151 (0.4151)  time: 0.8543  data: 0.8266  max mem: 314
+Epoch: [51]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (76.0000)  f1: 66.6667 (66.1333)  auroc: 93.3333 (85.4000)  auprc: 91.6667 (85.6933)  loss: 0.5818 (0.5569)  time: 0.1378  data: 0.1181  max mem: 314
+Epoch: [51] Total time: 0:00:01 (0.1622 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (76.0000)  f1: 66.6667 (66.1333)  auroc: 93.3333 (85.4000)  auprc: 91.6667 (85.6933)  loss: 0.5818 (0.5569)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6272 (0.6272)  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 81.2500 (81.2500)  auprc: 85.4167 (85.4167)  time: 0.8365  data: 0.8242  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6272 (0.5803)  acc: 75.0000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (54.6296)  auprc: 29.1667 (50.9259)  time: 0.2835  data: 0.2748  max mem: 314
+Test: Total time: 0:00:01 (0.3398 s / it)
+* Acc@1 61.111 F1 36.364 AUROC 63.889 AUPRC 46.230 loss 0.580
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 36.4% / 63.9% / 46.2%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [52]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 85.7143 (85.7143)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.5064 (0.5064)  time: 0.8199  data: 0.7925  max mem: 314
+Epoch: [52]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (86.0000)  f1: 85.7143 (79.1365)  auroc: 100.0000 (96.0000)  auprc: 100.0000 (97.2857)  loss: 0.4922 (0.5216)  time: 0.1327  data: 0.1133  max mem: 314
+Epoch: [52] Total time: 0:00:01 (0.1590 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (86.0000)  f1: 85.7143 (79.1365)  auroc: 100.0000 (96.0000)  auprc: 100.0000 (97.2857)  loss: 0.4922 (0.5216)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6313 (0.6313)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8554  data: 0.8424  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6313 (0.5753)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2895  data: 0.2808  max mem: 314
+Test: Total time: 0:00:01 (0.3506 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.575
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [53]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 86.6667 (86.6667)  auprc: 94.2857 (94.2857)  loss: 0.6076 (0.6076)  time: 0.8698  data: 0.8428  max mem: 314
+Epoch: [53]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (84.0000)  f1: 80.0000 (78.2095)  auroc: 100.0000 (93.6000)  auprc: 100.0000 (93.8413)  loss: 0.5272 (0.5173)  time: 0.1399  data: 0.1204  max mem: 314
+Epoch: [53] Total time: 0:00:01 (0.1644 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (84.0000)  f1: 80.0000 (78.2095)  auroc: 100.0000 (93.6000)  auprc: 100.0000 (93.8413)  loss: 0.5272 (0.5173)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6341 (0.6341)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 81.2500 (81.2500)  auprc: 85.4167 (85.4167)  time: 0.8144  data: 0.8027  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6341 (0.5733)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (54.6296)  auprc: 29.1667 (50.9259)  time: 0.2761  data: 0.2676  max mem: 314
+Test: Total time: 0:00:01 (0.3375 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 62.500 AUPRC 44.563 loss 0.573
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 62.5% / 44.6%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [54]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 80.0000 (80.0000)  auroc: 93.3333 (93.3333)  auprc: 91.6667 (91.6667)  loss: 0.4668 (0.4668)  time: 0.8326  data: 0.8015  max mem: 314
+Epoch: [54]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (88.0000)  f1: nan (nan)  auroc: 93.3333 (86.4000)  auprc: 91.6667 (89.2724)  loss: 0.4668 (0.4779)  time: 0.1349  data: 0.1145  max mem: 314
+Epoch: [54] Total time: 0:00:01 (0.1617 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (88.0000)  f1: nan (nan)  auroc: 93.3333 (86.4000)  auprc: 91.6667 (89.2724)  loss: 0.4668 (0.4779)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6407 (0.6407)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 81.2500 (81.2500)  auprc: 85.4167 (85.4167)  time: 0.8370  data: 0.8241  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6407 (0.5685)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (54.6296)  auprc: 29.1667 (50.9259)  time: 0.2834  data: 0.2747  max mem: 314
+Test: Total time: 0:00:01 (0.3452 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 62.500 AUPRC 44.563 loss 0.568
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 62.5% / 44.6%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [55]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 85.7143 (85.7143)  auroc: 93.7500 (93.7500)  auprc: 95.0000 (95.0000)  loss: 0.4922 (0.4922)  time: 0.8880  data: 0.8615  max mem: 314
+Epoch: [55]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (86.0000)  f1: nan (nan)  auroc: 93.7500 (87.2667)  auprc: 95.0000 (85.0413)  loss: 0.4674 (0.4833)  time: 0.1426  data: 0.1231  max mem: 314
+Epoch: [55] Total time: 0:00:01 (0.1677 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (86.0000)  f1: nan (nan)  auroc: 93.7500 (87.2667)  auprc: 95.0000 (85.0413)  loss: 0.4674 (0.4833)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6447 (0.6447)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8445  data: 0.8319  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6447 (0.5675)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2860  data: 0.2773  max mem: 314
+Test: Total time: 0:00:01 (0.3469 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.568
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [56]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 50.0000 (50.0000)  auroc: 91.6667 (91.6667)  auprc: 83.3333 (83.3333)  loss: 0.4916 (0.4916)  time: 0.8856  data: 0.8570  max mem: 314
+Epoch: [56]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (82.0000)  f1: 75.0000 (70.1333)  auroc: 91.6667 (87.1333)  auprc: 89.2857 (85.6457)  loss: 0.4930 (0.5087)  time: 0.1426  data: 0.1225  max mem: 314
+Epoch: [56] Total time: 0:00:01 (0.1640 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (82.0000)  f1: 75.0000 (70.1333)  auroc: 91.6667 (87.1333)  auprc: 89.2857 (85.6457)  loss: 0.4930 (0.5087)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6548 (0.6548)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8409  data: 0.8287  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6548 (0.5628)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2849  data: 0.2763  max mem: 314
+Test: Total time: 0:00:01 (0.3412 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 59.722 AUPRC 43.161 loss 0.563
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 59.7% / 43.2%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [57]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 50.0000 (50.0000)  f1: 60.0000 (60.0000)  auroc: 46.6667 (46.6667)  auprc: 62.9524 (62.9524)  loss: 0.7285 (0.7285)  time: 0.8925  data: 0.8671  max mem: 314
+Epoch: [57]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (74.0000)  f1: 80.0000 (70.5905)  auroc: 100.0000 (85.8333)  auprc: 100.0000 (88.8057)  loss: 0.4957 (0.5209)  time: 0.1432  data: 0.1239  max mem: 314
+Epoch: [57] Total time: 0:00:01 (0.1678 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (74.0000)  f1: 80.0000 (70.5905)  auroc: 100.0000 (85.8333)  auprc: 100.0000 (88.8057)  loss: 0.4957 (0.5209)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6582 (0.6582)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8139  data: 0.8029  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6582 (0.5621)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2759  data: 0.2677  max mem: 314
+Test: Total time: 0:00:01 (0.3337 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.562
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [58]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4027 (0.4027)  time: 0.8270  data: 0.7996  max mem: 314
+Epoch: [58]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (82.0000)  f1: 75.0000 (61.3333)  auroc: 100.0000 (83.2857)  auprc: 100.0000 (83.1524)  loss: 0.5110 (0.4793)  time: 0.1338  data: 0.1143  max mem: 314
+Epoch: [58] Total time: 0:00:01 (0.1600 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (82.0000)  f1: 75.0000 (61.3333)  auroc: 100.0000 (83.2857)  auprc: 100.0000 (83.1524)  loss: 0.5110 (0.4793)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6644 (0.6644)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.9107  data: 0.8990  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6644 (0.5598)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.3080  data: 0.2997  max mem: 314
+Test: Total time: 0:00:01 (0.3672 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.560
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [59]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 80.0000 (80.0000)  auprc: 75.5556 (75.5556)  loss: 0.5567 (0.5567)  time: 0.8906  data: 0.8604  max mem: 314
+Epoch: [59]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (82.0000)  f1: 80.0000 (61.9810)  auroc: 100.0000 (90.4667)  auprc: 100.0000 (85.9556)  loss: 0.4850 (0.4889)  time: 0.1430  data: 0.1229  max mem: 314
+Epoch: [59] Total time: 0:00:01 (0.1690 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (82.0000)  f1: 80.0000 (61.9810)  auroc: 100.0000 (90.4667)  auprc: 100.0000 (85.9556)  loss: 0.4850 (0.4889)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6624 (0.6624)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8506  data: 0.8382  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6624 (0.5629)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2883  data: 0.2794  max mem: 314
+Test: Total time: 0:00:01 (0.3495 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 61.111 AUPRC 44.087 loss 0.563
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 61.1% / 44.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [60]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.2770 (0.2770)  time: 0.8822  data: 0.8510  max mem: 314
+Epoch: [60]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (78.0000)  f1: 50.0000 (60.6222)  auroc: 93.3333 (87.4667)  auprc: 91.6667 (83.6444)  loss: 0.5281 (0.4996)  time: 0.1424  data: 0.1216  max mem: 314
+Epoch: [60] Total time: 0:00:01 (0.1687 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (78.0000)  f1: 50.0000 (60.6222)  auroc: 93.3333 (87.4667)  auprc: 91.6667 (83.6444)  loss: 0.5281 (0.4996)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6551 (0.6551)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.7165  data: 0.7019  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6551 (0.5677)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2436  data: 0.2340  max mem: 314
+Test: Total time: 0:00:00 (0.3061 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 59.722 AUPRC 41.310 loss 0.568
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 59.7% / 41.3%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [61]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 0.0000 (0.0000)  auroc: 85.7143 (85.7143)  auprc: 50.0000 (50.0000)  loss: 0.4100 (0.4100)  time: 0.9522  data: 0.9248  max mem: 314
+Epoch: [61]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (82.0000)  f1: nan (nan)  auroc: 87.5000 (88.2476)  auprc: 91.6667 (83.0857)  loss: 0.4704 (0.4519)  time: 0.1514  data: 0.1321  max mem: 314
+Epoch: [61] Total time: 0:00:01 (0.1739 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (82.0000)  f1: nan (nan)  auroc: 87.5000 (88.2476)  auprc: 91.6667 (83.0857)  loss: 0.4704 (0.4519)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6528 (0.6528)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.7044  data: 0.6920  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6528 (0.5715)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.6667 (48.7566)  time: 0.2396  data: 0.2307  max mem: 314
+Test: Total time: 0:00:00 (0.2981 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 56.944 AUPRC 39.643 loss 0.571
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 56.9% / 39.6%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [62]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 50.0000 (50.0000)  f1: 33.3333 (33.3333)  auroc: 75.0000 (75.0000)  auprc: 77.0833 (77.0833)  loss: 0.6502 (0.6502)  time: 0.8746  data: 0.8477  max mem: 314
+Epoch: [62]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (82.0000)  f1: 80.0000 (73.9556)  auroc: 100.0000 (90.9333)  auprc: 100.0000 (93.8000)  loss: 0.5112 (0.5489)  time: 0.1403  data: 0.1211  max mem: 314
+Epoch: [62] Total time: 0:00:01 (0.1667 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (82.0000)  f1: 80.0000 (73.9556)  auroc: 100.0000 (90.9333)  auprc: 100.0000 (93.8000)  loss: 0.5112 (0.5489)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6571 (0.6571)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8401  data: 0.8275  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6571 (0.5709)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.6667 (48.7566)  time: 0.2848  data: 0.2759  max mem: 314
+Test: Total time: 0:00:01 (0.3461 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 55.556 AUPRC 39.037 loss 0.571
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 55.6% / 39.0%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [63]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 80.0000 (80.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4594 (0.4594)  time: 0.8897  data: 0.8613  max mem: 314
+Epoch: [63]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (80.0000)  f1: 80.0000 (73.4857)  auroc: 100.0000 (93.7333)  auprc: 100.0000 (94.1746)  loss: 0.4594 (0.4722)  time: 0.1428  data: 0.1231  max mem: 314
+Epoch: [63] Total time: 0:00:01 (0.1670 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (80.0000)  f1: 80.0000 (73.4857)  auroc: 100.0000 (93.7333)  auprc: 100.0000 (94.1746)  loss: 0.4594 (0.4722)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6558 (0.6558)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.6878  data: 0.6752  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6558 (0.5743)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.6667 (48.7566)  time: 0.2338  data: 0.2251  max mem: 314
+Test: Total time: 0:00:00 (0.2973 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 55.556 AUPRC 39.037 loss 0.574
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 55.6% / 39.0%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [64]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.3640 (0.3640)  time: 0.8630  data: 0.8342  max mem: 314
+Epoch: [64]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (84.0000)  f1: 80.0000 (81.6000)  auroc: 93.7500 (91.5333)  auprc: 100.0000 (95.3600)  loss: 0.4850 (0.5187)  time: 0.1391  data: 0.1192  max mem: 314
+Epoch: [64] Total time: 0:00:01 (0.1647 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (84.0000)  f1: 80.0000 (81.6000)  auroc: 93.7500 (91.5333)  auprc: 100.0000 (95.3600)  loss: 0.4850 (0.5187)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6545 (0.6545)  acc: 62.5000 (62.5000)  f1: 40.0000 (40.0000)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8317  data: 0.8186  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6545 (0.5763)  acc: 62.5000 (61.1111)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.6667 (48.7566)  time: 0.2819  data: 0.2729  max mem: 314
+Test: Total time: 0:00:01 (0.3422 s / it)
+* Acc@1 61.111 F1 22.222 AUROC 54.167 AUPRC 38.144 loss 0.576
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 22.2% / 54.2% / 38.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [65]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.5424 (0.5424)  time: 0.8457  data: 0.8177  max mem: 314
+Epoch: [65]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (84.0000)  f1: 66.6667 (63.5556)  auroc: 91.6667 (86.6667)  auprc: 100.0000 (84.0000)  loss: 0.5107 (0.4761)  time: 0.1363  data: 0.1168  max mem: 314
+Epoch: [65] Total time: 0:00:01 (0.1602 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (84.0000)  f1: 66.6667 (63.5556)  auroc: 91.6667 (86.6667)  auprc: 100.0000 (84.0000)  loss: 0.5107 (0.4761)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6412 (0.6412)  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8472  data: 0.8349  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6412 (0.5853)  acc: 75.0000 (61.1111)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.6667 (48.7566)  time: 0.2870  data: 0.2783  max mem: 314
+Test: Total time: 0:00:01 (0.3403 s / it)
+* Acc@1 61.111 F1 36.364 AUROC 54.167 AUPRC 38.144 loss 0.585
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 36.4% / 54.2% / 38.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [66]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 88.8889 (88.8889)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4142 (0.4142)  time: 0.8813  data: 0.8535  max mem: 314
+Epoch: [66]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (90.0000)  f1: nan (nan)  auroc: 93.3333 (76.8000)  auprc: 100.0000 (81.7524)  loss: 0.4306 (0.4753)  time: 0.1418  data: 0.1220  max mem: 314
+Epoch: [66] Total time: 0:00:01 (0.1677 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (90.0000)  f1: nan (nan)  auroc: 93.3333 (76.8000)  auprc: 100.0000 (81.7524)  loss: 0.4306 (0.4753)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6307 (0.6307)  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8475  data: 0.8329  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6307 (0.5955)  acc: 62.5000 (55.5556)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.6667 (48.7566)  time: 0.2870  data: 0.2777  max mem: 314
+Test: Total time: 0:00:01 (0.3414 s / it)
+* Acc@1 55.556 F1 33.333 AUROC 54.167 AUPRC 38.144 loss 0.595
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 55.6% / 33.3% / 54.2% / 38.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [67]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 80.0000 (80.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4647 (0.4647)  time: 0.9271  data: 0.8968  max mem: 314
+Epoch: [67]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (80.0000)  f1: 80.0000 (72.1143)  auroc: 100.0000 (92.2667)  auprc: 100.0000 (90.6667)  loss: 0.4647 (0.4943)  time: 0.1479  data: 0.1281  max mem: 314
+Epoch: [67] Total time: 0:00:01 (0.1732 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (80.0000)  f1: 80.0000 (72.1143)  auroc: 100.0000 (92.2667)  auprc: 100.0000 (90.6667)  loss: 0.4647 (0.4943)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6241 (0.6241)  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8612  data: 0.8491  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6241 (0.6036)  acc: 62.5000 (55.5556)  f1: nan (nan)  auroc: 33.3333 (48.1481)  auprc: 26.6667 (48.7566)  time: 0.2916  data: 0.2831  max mem: 314
+Test: Total time: 0:00:01 (0.3531 s / it)
+* Acc@1 55.556 F1 33.333 AUROC 54.167 AUPRC 38.144 loss 0.604
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 55.6% / 33.3% / 54.2% / 38.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [68]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 93.3333 (93.3333)  auprc: 91.6667 (91.6667)  loss: 0.4926 (0.4926)  time: 0.8835  data: 0.8565  max mem: 314
+Epoch: [68]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (84.0000)  f1: nan (nan)  auroc: 93.3333 (88.8000)  auprc: 92.6667 (90.7790)  loss: 0.4611 (0.4619)  time: 0.1421  data: 0.1224  max mem: 314
+Epoch: [68] Total time: 0:00:01 (0.1690 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (84.0000)  f1: nan (nan)  auroc: 93.3333 (88.8000)  auprc: 92.6667 (90.7790)  loss: 0.4611 (0.4619)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6231 (0.6231)  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8318  data: 0.8204  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6231 (0.6058)  acc: 62.5000 (55.5556)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2818  data: 0.2735  max mem: 314
+Test: Total time: 0:00:01 (0.3409 s / it)
+* Acc@1 55.556 F1 33.333 AUROC 55.556 AUPRC 38.750 loss 0.606
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 55.6% / 33.3% / 55.6% / 38.8%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [69]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 80.0000 (80.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4687 (0.4687)  time: 0.8545  data: 0.8256  max mem: 314
+Epoch: [69]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 75.0000 (82.0000)  f1: nan (nan)  auroc: 93.3333 (87.0000)  auprc: 95.0000 (85.8667)  loss: 0.4995 (0.4565)  time: 0.1378  data: 0.1180  max mem: 314
+Epoch: [69] Total time: 0:00:01 (0.1646 s / it)
+Averaged stats: lr: 0.000006  acc: 75.0000 (82.0000)  f1: nan (nan)  auroc: 93.3333 (87.0000)  auprc: 95.0000 (85.8667)  loss: 0.4995 (0.4565)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6279 (0.6279)  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8563  data: 0.8454  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6279 (0.6029)  acc: 62.5000 (55.5556)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2903  data: 0.2818  max mem: 314
+Test: Total time: 0:00:01 (0.3387 s / it)
+* Acc@1 55.556 F1 33.333 AUROC 55.556 AUPRC 38.750 loss 0.603
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 55.6% / 33.3% / 55.6% / 38.8%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [70]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4009 (0.4009)  time: 0.8841  data: 0.8569  max mem: 314
+Epoch: [70]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (86.0000)  f1: 85.7143 (74.4508)  auroc: 100.0000 (93.6667)  auprc: 100.0000 (94.4000)  loss: 0.4555 (0.4575)  time: 0.1418  data: 0.1224  max mem: 314
+Epoch: [70] Total time: 0:00:01 (0.1671 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (86.0000)  f1: 85.7143 (74.4508)  auroc: 100.0000 (93.6667)  auprc: 100.0000 (94.4000)  loss: 0.4555 (0.4575)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6420 (0.6420)  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.6998  data: 0.6880  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6420 (0.5961)  acc: 62.5000 (55.5556)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2380  data: 0.2294  max mem: 314
+Test: Total time: 0:00:00 (0.2953 s / it)
+* Acc@1 55.556 F1 33.333 AUROC 55.556 AUPRC 38.750 loss 0.596
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 55.6% / 33.3% / 55.6% / 38.8%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [71]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 66.6667 (66.6667)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.3936 (0.3936)  time: 0.8487  data: 0.8164  max mem: 314
+Epoch: [71]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (84.0000)  f1: 75.0000 (72.6788)  auroc: 100.0000 (95.0000)  auprc: 100.0000 (92.5333)  loss: 0.4603 (0.4466)  time: 0.1367  data: 0.1167  max mem: 314
+Epoch: [71] Total time: 0:00:01 (0.1624 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (84.0000)  f1: 75.0000 (72.6788)  auroc: 100.0000 (95.0000)  auprc: 100.0000 (92.5333)  loss: 0.4603 (0.4466)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6424 (0.6424)  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8696  data: 0.8580  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6424 (0.6022)  acc: 62.5000 (55.5556)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2945  data: 0.2860  max mem: 314
+Test: Total time: 0:00:01 (0.3588 s / it)
+* Acc@1 55.556 F1 33.333 AUROC 55.556 AUPRC 38.750 loss 0.602
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 55.6% / 33.3% / 55.6% / 38.8%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [72]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.3537 (0.3537)  time: 0.9269  data: 0.9003  max mem: 314
+Epoch: [72]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (84.0000)  f1: 75.0000 (73.4476)  auroc: 100.0000 (91.7333)  auprc: 100.0000 (92.8889)  loss: 0.4477 (0.4628)  time: 0.1482  data: 0.1286  max mem: 314
+Epoch: [72] Total time: 0:00:01 (0.1754 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (84.0000)  f1: 75.0000 (73.4476)  auroc: 100.0000 (91.7333)  auprc: 100.0000 (92.8889)  loss: 0.4477 (0.4628)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6382 (0.6382)  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 75.0000 (75.0000)  auprc: 83.0357 (83.0357)  time: 0.8575  data: 0.8455  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6382 (0.6096)  acc: 62.5000 (55.5556)  f1: nan (nan)  auroc: 41.6667 (51.8519)  auprc: 29.1667 (49.8677)  time: 0.2905  data: 0.2819  max mem: 314
+Test: Total time: 0:00:01 (0.3502 s / it)
+* Acc@1 55.556 F1 33.333 AUROC 55.556 AUPRC 38.750 loss 0.610
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 55.6% / 33.3% / 55.6% / 38.8%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [73]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.3176 (0.3176)  time: 0.9363  data: 0.9084  max mem: 314
+Epoch: [73]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 100.0000 (86.0000)  f1: 100.0000 (71.2000)  auroc: 100.0000 (93.6000)  auprc: 100.0000 (93.3333)  loss: 0.4459 (0.4220)  time: 0.1496  data: 0.1298  max mem: 314
+Epoch: [73] Total time: 0:00:01 (0.1749 s / it)
+Averaged stats: lr: 0.000006  acc: 100.0000 (86.0000)  f1: 100.0000 (71.2000)  auroc: 100.0000 (93.6000)  auprc: 100.0000 (93.3333)  loss: 0.4459 (0.4220)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6447 (0.6447)  acc: 62.5000 (62.5000)  f1: 57.1429 (57.1429)  auroc: 68.7500 (68.7500)  auprc: 79.2857 (79.2857)  time: 0.8574  data: 0.8443  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6447 (0.6097)  acc: 62.5000 (55.5556)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (48.2011)  time: 0.2904  data: 0.2815  max mem: 314
+Test: Total time: 0:00:01 (0.3527 s / it)
+* Acc@1 55.556 F1 33.333 AUROC 54.167 AUPRC 38.056 loss 0.610
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 55.6% / 33.3% / 54.2% / 38.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [74]  [0/7]  eta: 0:00:05  lr: 0.000006  acc: 100.0000 (100.0000)  f1: 100.0000 (100.0000)  auroc: 100.0000 (100.0000)  auprc: 100.0000 (100.0000)  loss: 0.4033 (0.4033)  time: 0.8475  data: 0.8226  max mem: 314
+Epoch: [74]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (84.0000)  f1: 66.6667 (61.1429)  auroc: 100.0000 (91.6952)  auprc: 100.0000 (84.8000)  loss: 0.4249 (0.4392)  time: 0.1365  data: 0.1175  max mem: 314
+Epoch: [74] Total time: 0:00:01 (0.1638 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (84.0000)  f1: 66.6667 (61.1429)  auroc: 100.0000 (91.6952)  auprc: 100.0000 (84.8000)  loss: 0.4249 (0.4392)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6543 (0.6543)  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 68.7500 (68.7500)  auprc: 79.2857 (79.2857)  time: 0.9340  data: 0.9217  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6543 (0.6074)  acc: 75.0000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (48.2011)  time: 0.3160  data: 0.3073  max mem: 314
+Test: Total time: 0:00:01 (0.3752 s / it)
+* Acc@1 61.111 F1 36.364 AUROC 54.167 AUPRC 38.056 loss 0.607
+Accuracy / F1 / AUROC / AUPRC of the network on the 18 test images: 61.1% / 36.4% / 54.2% / 38.1%
+Max Accuracy / F1 / AUROC / AUPRC: 66.67% / 36.36% / 65.28% / 46.86%
+
+# REQUIRED PARAMS: 48
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Epoch: [75]  [0/7]  eta: 0:00:06  lr: 0.000006  acc: 87.5000 (87.5000)  f1: 0.0000 (0.0000)  auroc: 85.7143 (85.7143)  auprc: 50.0000 (50.0000)  loss: 0.4197 (0.4197)  time: 0.9187  data: 0.8872  max mem: 314
+Epoch: [75]  [6/7]  eta: 0:00:00  lr: 0.000006  acc: 87.5000 (78.0000)  f1: nan (nan)  auroc: 85.7143 (85.1810)  auprc: 83.3333 (80.9600)  loss: 0.4282 (0.4804)  time: 0.1468  data: 0.1268  max mem: 314
+Epoch: [75] Total time: 0:00:01 (0.1720 s / it)
+Averaged stats: lr: 0.000006  acc: 87.5000 (78.0000)  f1: nan (nan)  auroc: 85.7143 (85.1810)  auprc: 83.3333 (80.9600)  loss: 0.4282 (0.4804)
+log_dir: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+Test:  [0/3]  eta: 0:00:02  loss: 0.6568 (0.6568)  acc: 75.0000 (75.0000)  f1: 66.6667 (66.6667)  auroc: 68.7500 (68.7500)  auprc: 79.2857 (79.2857)  time: 0.8778  data: 0.8652  max mem: 314
+Test:  [2/3]  eta: 0:00:00  loss: 0.6568 (0.6101)  acc: 75.0000 (61.1111)  f1: nan (nan)  auroc: 41.6667 (49.0741)  auprc: 29.1667 (48.2011)  time: 0.2974  data: 0.2884  max mem: 314
+Test: Total time: 0:00:01 (0.3587 s / it)
+* Acc@1 61.111 F1 36.364 AUROC 54.167 AUPRC 38.056 loss 0.610
+Training time 0:02:50

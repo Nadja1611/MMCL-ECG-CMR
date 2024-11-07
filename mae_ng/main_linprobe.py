@@ -281,9 +281,9 @@ def main(args):
         if args.wandb == True:
             config = vars(args)
             if args.wandb_id:
-                wandb.init(project=args.wandb_project, id=args.wandb_id, config=config, entity="oturgut")
+                wandb.init(project=args.wandb_project, id=args.wandb_id, config=config, entity="madja161n")
             else:
-                wandb.init(project=args.wandb_project, config=config, entity="oturgut")
+                wandb.init(project=args.wandb_project, config=config, entity="madja161n")
     elif args.eval and "checkpoint" not in args.resume.split("/")[-1]:
         log_writer = SummaryWriter(log_dir=args.log_dir + "/eval")
     else:
