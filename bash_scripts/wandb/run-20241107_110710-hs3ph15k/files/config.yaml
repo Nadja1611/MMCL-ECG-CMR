@@ -1,0 +1,272 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.13.1
+    framework: torch
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.10.4
+    start_time: 1730974030.824574
+    t:
+      1:
+      - 1
+      - 5
+      - 41
+      - 53
+      - 55
+      - 63
+      2:
+      - 1
+      - 5
+      - 41
+      - 53
+      - 55
+      - 63
+      3:
+      - 16
+      - 23
+      4: 3.10.4
+      5: 0.13.1
+      8:
+      - 5
+aa:
+  desc: null
+  value: rand-m9-mstd0.5-inc1
+accum_iter:
+  desc: null
+  value: 1
+attention_pool:
+  desc: null
+  value: true
+batch_size:
+  desc: null
+  value: 8
+blr:
+  desc: null
+  value: 3.0e-06
+clip_grad:
+  desc: null
+  value: null
+color_jitter:
+  desc: null
+  value: null
+cutmix:
+  desc: null
+  value: 0
+cutmix_minmax:
+  desc: null
+  value: null
+data_path:
+  desc: null
+  value: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/train/tensor.pt
+device:
+  desc: null
+  value: cuda
+dist_eval:
+  desc: null
+  value: false
+dist_on_itp:
+  desc: null
+  value: false
+dist_url:
+  desc: null
+  value: env://
+distributed:
+  desc: null
+  value: false
+downstream_task:
+  desc: null
+  value: classification
+drop_path:
+  desc: null
+  value: 0.2
+embeddings_dir:
+  desc: null
+  value: ''
+epochs:
+  desc: null
+  value: 400
+eval:
+  desc: null
+  value: false
+finetune:
+  desc: null
+  value: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/EKGMRIProjekt/model_weights/signal_encoder_mmcl_wo_mdm.pth
+freq_shift_delta:
+  desc: null
+  value: 0.005
+ft_surr_phase_noise:
+  desc: null
+  value: 0.075
+global_pool:
+  desc: null
+  value: attention_pool
+input_channels:
+  desc: null
+  value: 1
+input_electrodes:
+  desc: null
+  value: 12
+input_size:
+  desc: null
+  value:
+  - 1
+  - 12
+  - 2500
+jitter_sigma:
+  desc: null
+  value: 0.2
+labels_mask_path:
+  desc: null
+  value: ''
+labels_path:
+  desc: null
+  value: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/train/labels.pt
+layer_decay:
+  desc: null
+  value: 0.5
+local_rank:
+  desc: null
+  value: -1
+log_dir:
+  desc: null
+  value: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints/
+lower_bnd:
+  desc: null
+  value: 0
+lr:
+  desc: null
+  value: null
+mask_c_ratio:
+  desc: null
+  value: 0.0
+mask_ratio:
+  desc: null
+  value: 0.0
+mask_t_ratio:
+  desc: null
+  value: 0.0
+masking_blockwise:
+  desc: null
+  value: false
+max_delta:
+  desc: null
+  value: 0.25
+min_lr:
+  desc: null
+  value: 0.0
+mixup:
+  desc: null
+  value: 0
+mixup_mode:
+  desc: null
+  value: batch
+mixup_prob:
+  desc: null
+  value: 1.0
+mixup_switch_prob:
+  desc: null
+  value: 0.5
+model:
+  desc: null
+  value: vit_tiny_patchX
+nb_classes:
+  desc: null
+  value: 2
+num_workers:
+  desc: null
+  value: 24
+output_dir:
+  desc: null
+  value: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/checkpoints//weights/
+patch_height:
+  desc: null
+  value: 1
+patch_size:
+  desc: null
+  value:
+  - 1
+  - 100
+patch_width:
+  desc: null
+  value: 100
+patience:
+  desc: null
+  value: 25.0
+pin_mem:
+  desc: null
+  value: true
+plot_attention_map:
+  desc: null
+  value: false
+plot_embeddings:
+  desc: null
+  value: false
+pos_label:
+  desc: null
+  value: 1
+predictions_dir:
+  desc: null
+  value: ''
+recount:
+  desc: null
+  value: 1
+remode:
+  desc: null
+  value: pixel
+reprob:
+  desc: null
+  value: 0.25
+rescaling_sigma:
+  desc: null
+  value: 0.5
+resplit:
+  desc: null
+  value: false
+resume:
+  desc: null
+  value: ''
+seed:
+  desc: null
+  value: 0
+smoothing:
+  desc: null
+  value: 0.1
+start_epoch:
+  desc: null
+  value: 0
+time_steps:
+  desc: null
+  value: 2500
+upper_bnd:
+  desc: null
+  value: 0
+val_data_path:
+  desc: null
+  value: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/val/tensor.pt
+val_labels_mask_path:
+  desc: null
+  value: ''
+val_labels_path:
+  desc: null
+  value: /gpfs/data/fs72515/nadja_g/ECGMRIProjekt/ECG_data/val/labels.pt
+wandb:
+  desc: null
+  value: true
+wandb_id:
+  desc: null
+  value: ''
+wandb_project:
+  desc: null
+  value: MAE_ECG_Fin_Tiny_LV
+warmup_epochs:
+  desc: null
+  value: 5
+weight_decay:
+  desc: null
+  value: 0.2
+world_size:
+  desc: null
+  value: 1
