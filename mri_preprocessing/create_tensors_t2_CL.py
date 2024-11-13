@@ -4,6 +4,7 @@ import torch
 import pydicom as dcm
 import torch.nn.functional as F
 import pandas as pd 
+import matplotlib.pyplot as plt
 
 def pad_volume(volume, target_shape):
     padded_volume = []
@@ -81,7 +82,14 @@ def generate_tensors_and_labels_t2star(data_dir, df):
 
 # Generate tensors and labels, ensuring they match the filtered criteria
 patients_data, labels_tensor, laufnummer = generate_tensors_and_labels_t2star(data_dir, df)
+#### check if images are correct
+for i in range(3):
+    plt.figure()
+    plt.imshow(patients_data[55,i], cmap = 'inferno')
+    plt.savefig('/Users/nadjagruber/Documents/ECG_MRI_Project/tensors'+str(i)+'.png')
 
+print(labels_tensor)
+print(torch.sum(labels_tensor[:,1]))
 # Save to .pt files
 torch.save(patients_data, '/Users/nadjagruber/Documents/ECG_MRI_Project/processed_t2star_data.pt')
 torch.save(labels_tensor, '/Users/nadjagruber/Documents/ECG_MRI_Project/processed_t2star_labels.pt')
@@ -91,4 +99,3 @@ print(f"Saved labels to 'processed_t2star_labels.pt' with {len(labels_tensor)} e
 print(f"Saved data of the following patients  entries {laufnummer}")
 
 
-print(patients_data.shape)
