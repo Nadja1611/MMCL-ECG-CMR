@@ -6,6 +6,12 @@ import torch.nn.functional as F
 import pandas as pd 
 import matplotlib.pyplot as plt
 
+outputdir = '/Users/nadjagruber/Documents/ECG_MRI_Project/Data_T2STAR_CL'
+# Define the directory containing patient data
+data_dir = "/Users/nadjagruber/Documents/ECG_MRI_Project/MRI_data_preprocessed/BL/T2_STAR/"
+# load excel file
+excel_file = '/Users/nadjagruber/Documents/ECG_MRI_Project/ecg_preprocessing_codes/marinastemi.xlsx'
+
 def pad_volume(volume, target_shape):
     padded_volume = []
     for slice_tensor in volume:
@@ -18,12 +24,10 @@ def pad_volume(volume, target_shape):
     return torch.stack(padded_volume)
 
 # Read the marina stemi Excel file
-excel_file = '/Users/nadjagruber/Documents/ECG_MRI_Project/ecg_preprocessing_codes/marinastemi.xlsx'
 df = pd.read_excel(excel_file)
 df['Revasc_time_(dd.mm.yyyy hh:mm)'] = pd.to_datetime(df['Revasc_time_(dd.mm.yyyy hh:mm)'], format='%d.%m.%y %H:%M')
 
-# Define the directory containing patient data
-data_dir = "/Users/nadjagruber/Documents/ECG_MRI_Project/MRI_data_preprocessed/BL/T2_STAR/"
+
 
 def generate_tensors_and_labels_t2star(data_dir, df):
     patient_volumes = []
@@ -86,13 +90,13 @@ patients_data, labels_tensor, laufnummer = generate_tensors_and_labels_t2star(da
 for i in range(3):
     plt.figure()
     plt.imshow(patients_data[55,i], cmap = 'inferno')
-    plt.savefig('/Users/nadjagruber/Documents/ECG_MRI_Project/tensors'+str(i)+'.png')
+    plt.savefig(outputdir + '/tensors'+str(i)+'.png')
 
 print(labels_tensor)
 print(torch.sum(labels_tensor[:,1]))
 # Save to .pt files
-torch.save(patients_data, '/Users/nadjagruber/Documents/ECG_MRI_Project/processed_t2star_data.pt')
-torch.save(labels_tensor, '/Users/nadjagruber/Documents/ECG_MRI_Project/processed_t2star_labels.pt')
+torch.save(patients_data, outputdir + '/processed_t2star_data.pt')
+torch.save(labels_tensor, outputdir + '/processed_t2star_labels.pt')
 
 print(f"Saved stacked T2* data to 'processed_t2star_data.pt' with shape {len(patients_data)}")
 print(f"Saved labels to 'processed_t2star_labels.pt' with {len(labels_tensor)} entries")
