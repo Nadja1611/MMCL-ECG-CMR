@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/gpfs/data/fs72515/nadja_g/SimCLR/simclr.py", line 9, in <module>
+    from dataset import *
+  File "/gpfs/data/fs72515/nadja_g/SimCLR/dataset.py", line 46
+    def __init__(self, data_dir=None train=True, transform=None):
+                                ^^^^^^^^^^
+SyntaxError: invalid syntax. Perhaps you forgot a comma?

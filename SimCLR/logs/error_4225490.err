@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/gpfs/data/fs72515/nadja_g/SimCLR/simclr.py", line 130, in <module>
+    flowers_ds,
+    ^^^^^^^^^^
+NameError: name 'flowers_ds' is not defined
