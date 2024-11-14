@@ -64,14 +64,19 @@ def generate_tensors_and_labels_t2star(data_dir, df):
                 for image_file in sorted(slice_files):
                     image_path = os.path.join(patient_dir, image_file)
                     dat = dcm.dcmread(image_path)
+
                     image = dat.pixel_array
+                    print(image.shape)
+                    image = image[50:178,8:136]   
+                    print(image.shape)
                     image = image - np.mean(image)
                     image = image/np.std(image)
+
                     patient_volume.append(torch.tensor(image, dtype=torch.float32))
                             # One-hot encode the label
-                max_height = max(max_height, patient_volume[0].shape[0])
-                max_width = max(max_width, patient_volume[0].shape[1])            
-                padded_volume = pad_volume(torch.stack(patient_volume), (max_height, max_width))
+       
+                padded_volume = (torch.stack(patient_volume))
+
                 Pat.append((padded_volume))
                 one_hot_label = torch.zeros(2)
                 one_hot_label[int(label)] = 1
@@ -102,4 +107,4 @@ print(f"Saved stacked T2* data to 'processed_t2star_data.pt' with shape {len(pat
 print(f"Saved labels to 'processed_t2star_labels.pt' with {len(labels_tensor)} entries")
 print(f"Saved data of the following patients  entries {laufnummer}")
 
-
+print(patients_data.shape)
