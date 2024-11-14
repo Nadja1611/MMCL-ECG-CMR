@@ -12,16 +12,7 @@ data_dir = "/Users/nadjagruber/Documents/ECG_MRI_Project/MRI_data_preprocessed/B
 # load excel file
 excel_file = '/Users/nadjagruber/Documents/ECG_MRI_Project/ecg_preprocessing_codes/marinastemi.xlsx'
 
-def pad_volume(volume, target_shape):
-    padded_volume = []
-    for slice_tensor in volume:
-        padding = [
-            0, target_shape[1] - slice_tensor.shape[1],  # Width padding
-            0, target_shape[0] - slice_tensor.shape[0]   # Height padding
-        ]
-        padded_slice = F.pad(slice_tensor, padding, "constant", 0)
-        padded_volume.append(padded_slice)
-    return torch.stack(padded_volume)
+
 
 # Read the marina stemi Excel file
 df = pd.read_excel(excel_file)
