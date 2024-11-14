@@ -1,0 +1,37 @@
+Fri Nov  8 14:17:10 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 545.23.08              Driver Version: 545.23.08    CUDA Version: 12.3     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA A100-PCIE-40GB          Off | 00000000:01:00.0 Off |                    0 |
+| N/A   52C    P0              46W / 250W |      4MiB / 40960MiB |      0%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+|   1  NVIDIA A100-PCIE-40GB          Off | 00000000:81:00.0 Off |                    0 |
+| N/A   44C    P0              40W / 250W |      4MiB / 40960MiB |      4%      Default |
+|                                         |                      |             Disabled |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+Torch-Version 2.4.0+cu121
+DEVICE: cuda
+Time taken for epoch 1: 0.171 mins
+Time taken for epoch 2: 0.115 mins
+Time taken for epoch 3: 0.114 mins
+Time taken for epoch 4: 0.113 mins
+Time taken for epoch 5: 0.117 mins
+Time taken for epoch 6: 0.115 mins
+Time taken for epoch 7: 0.115 mins
+Time taken for epoch 8: 0.114 mins
+Time taken for epoch 9: 0.115 mins
+Time taken for epoch 10: 0.116 mins
+Training complete.

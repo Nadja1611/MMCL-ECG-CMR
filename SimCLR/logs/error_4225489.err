@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/gpfs/data/fs72515/nadja_g/SimCLR/simclr.py", line 118, in <module>
+    batch_size=BATCH_SIZE,
+               ^^^^^^^^^^
+NameError: name 'BATCH_SIZE' is not defined
