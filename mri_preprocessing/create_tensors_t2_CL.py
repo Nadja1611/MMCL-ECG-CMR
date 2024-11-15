@@ -12,7 +12,7 @@ outputdir = '/Users/nadjagruber/Documents/ECG_MRI_Project/Data_T2STAR_CL'
 data_dir = "/Users/nadjagruber/Documents/ECG_MRI_Project/MRI_data_preprocessed/BL/T2_STAR/"
 # load excel file
 excel_file = '/Users/nadjagruber/Documents/ECG_MRI_Project/ecg_preprocessing_codes/marinastemi.xlsx'
-
+print('we start')
 
 
 # Read the marina stemi Excel file
@@ -76,13 +76,21 @@ def generate_tensors_and_labels_t2star(data_dir, df):
                     print(np.min(image))
                     print(np.max(image))
 
-                    #plt.figure() 
-                    #plt.imshow(image, cmap = 'inferno')
-                   # plt.savefig('/Users/nadjagruber/Documents/ECG_MRI_Project/Data_T2STAR_CL/' + patient + '_' + str(image_file) + '.png') 
+
                     patient_volume.append(torch.tensor(image, dtype=torch.float32))
                             # One-hot encode the label
        
                 padded_volume = (torch.stack(patient_volume))
+                plt.figure(figsize = (9,9)) 
+                plt.subplot(1,3,1)
+                plt.imshow(padded_volume[0], cmap = 'inferno')
+                plt.subplot(1,3,2)
+                plt.imshow(padded_volume[1], cmap = 'inferno')
+                plt.subplot(1,3,3)
+                plt.imshow(padded_volume[2], cmap = 'inferno')
+                plt.title(str(int(label)))
+                plt.savefig('/Users/nadjagruber/Documents/ECG_MRI_Project/Data_T2STAR_CL/' + patient + '.png') 
+
 
                 Pat.append((padded_volume))
                 one_hot_label = torch.zeros(2)
@@ -93,16 +101,9 @@ def generate_tensors_and_labels_t2star(data_dir, df):
 
     
 
-    
-
-
 # Generate tensors and labels, ensuring they match the filtered criteria
 patients_data, labels_tensor, laufnummer = generate_tensors_and_labels_t2star(data_dir, df)
-#### check if images are correct
-for i in range(3):
-    plt.figure()
-    plt.imshow(patients_data[55,i], cmap = 'inferno')
-    plt.savefig(outputdir + '/tensors'+str(i)+'.png')
+
 
 print(labels_tensor)
 print(torch.sum(labels_tensor[:,1]))

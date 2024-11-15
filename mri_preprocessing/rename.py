@@ -5,9 +5,9 @@ import os
 import re
 
 ' specify for which modality you want to rename the folders '
-modality = 'T2_STAR'
+modality = 'LGE'
 
-file = '/Users/nadjagruber/Documents/ECG_MRI_Project/ECG2MRI_new/Tabelle_Datensatz.xlsx'
+file = '/Users/nadjagruber/Documents/ECG_MRI_Project/MRI_data_preprocessed/Tabelle_Datensatz.xlsx'
 df = pd.read_excel(file)
 # Sample lists of names and numbers
 surnames = df['Name']
@@ -28,7 +28,7 @@ def normalize_string(s):
 
 def are_strings_equal(s1, s2):
     return normalize_string(s1) in normalize_string(s2)
-
+ 
 
 # Get the combined names§§
 combined_names = combine_surnames_names(surnames, names)
@@ -36,7 +36,7 @@ print(combined_names)
 # Print the combined names
 #print(combined_names)
 # Sample folders (they could be actual folders in a directory or strings representing folder names)
-folders = "/Users/nadjagruber/Documents/ECG_MRI_Project/ECG2MRI_new/BL/" + modality
+folders = "/Users/nadjagruber/Documents/ECG_MRI_Project/MRI_data_preprocessed/BL/" + modality
 
 
 
@@ -79,7 +79,7 @@ def replace_name_with_number(folders, name_to_number, directory):
     return updated_folders
 for folder in os.listdir(folders):
 # Replace names with numbers
-    new_folder_names = replace_name_with_number(folder, name_to_number, "/Users/nadjagruber/Documents/ECG_MRI_Project/ECG2MRI_new/BL/" + modality)
+    new_folder_names = replace_name_with_number(folder, name_to_number, "/Users/nadjagruber/Documents/ECG_MRI_Project/MRI_data_preprocessed/BL/" + modality)
    # print(new_folder_names)    
 
 
