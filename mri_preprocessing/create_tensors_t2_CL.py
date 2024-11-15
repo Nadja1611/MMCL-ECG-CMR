@@ -5,6 +5,7 @@ import pydicom as dcm
 import torch.nn.functional as F
 import pandas as pd 
 import matplotlib.pyplot as plt
+from skimage.transform import resize
 
 outputdir = '/Users/nadjagruber/Documents/ECG_MRI_Project/Data_T2STAR_CL'
 # Define the directory containing patient data
@@ -21,7 +22,6 @@ df['Revasc_time_(dd.mm.yyyy hh:mm)'] = pd.to_datetime(df['Revasc_time_(dd.mm.yyy
 
 
 def generate_tensors_and_labels_t2star(data_dir, df):
-    patient_volumes = []
     Pat = []
     labels = []
     laufnummer = []
@@ -50,19 +50,35 @@ def generate_tensors_and_labels_t2star(data_dir, df):
                 print(f"Skipping {patient} due to insufficient slices (found {len(slice_files)})")
                 continue
             elif len(slice_files) == 3 and label == 1 or label == 0:  # Only consider patients with exactly 3 slices
-                print(len(slice_files))
                 patient_volume = []
                 for image_file in sorted(slice_files):
+
                     image_path = os.path.join(patient_dir, image_file)
                     dat = dcm.dcmread(image_path)
-
+                    print(dat.InstanceNumber)
                     image = dat.pixel_array
                     print(image.shape)
-                    image = image[50:178,8:136]   
-                    print(image.shape)
-                    image = image - np.mean(image)
-                    image = image/np.std(image)
+                    mini = np.min([np.shape(image)[0], np.shape(image)[1]])
+                    print(mini)
+                    diffi_vert = int(np.round((np.shape(image)[0] - mini)/2))
+                    diffi_hor = int(np.round((np.shape(image)[1] - mini)/2))
 
+                    print(diffi_vert)
+                    if diffi_vert and diffi_hor != 0:
+                        image = image[diffi_vert:-diffi_vert, diffi_hor:-diffi_hor]
+                    image = resize(image, (256,256))
+                    image = image[50:-50, 30:-70]
+                   # image = image[42:154,24:136] 
+                    print(image.shape)
+                    image = image - np.min(image)
+                    image = image/np.max(image)
+                    #image = image/np.std(image)
+                    print(np.min(image))
+                    print(np.max(image))
+
+                    #plt.figure() 
+                    #plt.imshow(image, cmap = 'inferno')
+                   # plt.savefig('/Users/nadjagruber/Documents/ECG_MRI_Project/Data_T2STAR_CL/' + patient + '_' + str(image_file) + '.png') 
                     patient_volume.append(torch.tensor(image, dtype=torch.float32))
                             # One-hot encode the label
        
