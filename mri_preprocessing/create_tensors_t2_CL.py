@@ -5,6 +5,7 @@ import pydicom as dcm
 import pandas as pd
 import matplotlib.pyplot as plt
 from skimage.transform import resize
+from operator import itemgetter
 
 outputdir = '/Users/nadjagruber/Documents/ECG_MRI_Project/Data_T2STAR_CL'
 data_dir = "/Users/nadjagruber/Documents/ECG_MRI_Project/MRI_data_preprocessed/BL/T2_STAR/"
@@ -23,7 +24,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
     valid_patients = valid_patient_rows['Laufnummer_Marina_STEMI'].astype(str)
     converted_list = [str(int(float(item))) for item in valid_patients]
 
-    for patient in sorted(os.listdir(data_dir)):
+    for patient in sorted(os.listdir(data_dir)[:]):
         if (patient.split('_')[0]) in converted_list:
             laufnummer.append(patient.split('_')[0])
             patient_dir = os.path.join(data_dir, patient)
@@ -44,6 +45,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
             for image_file in sorted(slice_files):
                 image_path = os.path.join(patient_dir, image_file)
                 dat = dcm.dcmread(image_path)
+                print(dat.InstanceNumber)
                 image = dat.pixel_array
                 mini = min(image.shape)
                 diffi_vert = (image.shape[0] - mini) // 2
@@ -65,7 +67,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
 
     # Process LGE data
     i=0
-    for patient in sorted(os.listdir(data_dir_lge)):
+    for patient in sorted(os.listdir(data_dir_lge)[:]):
         if patient != '.DS_Store':
 
             if (patient.split('_')[0]) not in converted_list:
@@ -79,9 +81,17 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
                 print(f"Processing LGE {patient}: Found {len(slice_files)} slices")
 
                 patient_volume_lge = []
+                slice_data = []
+
                 for image_file in sorted(slice_files):
                     image_path = os.path.join(patient_dir_lge, image_file)
                     dat = dcm.dcmread(image_path)
+                    
+                    # Get the slice location
+                    slice_location = float(dat.SliceLocation)
+                    print(slice_location, flush=True)
+                    
+                    # Preprocess the image
                     image = dat.pixel_array
                     mini = min(image.shape)
                     diffi_vert = (image.shape[0] - mini) // 2
@@ -94,21 +104,29 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
                     image = image[50:-50, 30:-70]
                     image = (image - image.min()) / (image.max() - image.min())
                     
-                    patient_volume_lge.append(torch.tensor(image, dtype=torch.float32))
-                
-                padded_volume_lge = torch.stack(patient_volume_lge)
+                    # Append the tensor and its slice location as a tuple
+                    slice_data.append((slice_location, torch.tensor(image, dtype=torch.float32)))
 
+                # Sort the slice_data list by slice location
+                slice_data = sorted(slice_data, key=itemgetter(0))
+
+                # Extract the reordered tensors
+                patient_volume_lge = [item[1] for item in slice_data]
+                                
+                padded_volume_lge = torch.stack(patient_volume_lge)
+                padded_volume_lge = resize(np.array(padded_volume_lge), (10, int(padded_volume_lge.shape[1]), int(padded_volume_lge.shape[2])))
+                print(padded_volume_lge.shape)
                 Pat_lge.append(padded_volume_lge)
                 if laufnummer[i]!=laufnummer_lge[i]:
                     print('something is wrong')
                 plt.figure(figsize=(10,8))
                 plt.subplot(2,3,1)
-                plt.imshow(padded_volume_lge[6])
+                plt.imshow(padded_volume_lge[2])
                 plt.subplot(2,3,2)
                 plt.imshow(padded_volume_lge[4])
                 plt.title(laufnummer_lge[i])
                 plt.subplot(2,3,3)
-                plt.imshow(padded_volume_lge[2])
+                plt.imshow(padded_volume_lge[8])
                 plt.subplot(2,3,4)
                 plt.imshow(Pat[i][0])
                 plt.subplot(2,3,5)
@@ -121,7 +139,9 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
                 plt.close()                
 
                 i += 1
-    return torch.stack(Pat), (Pat_lge), torch.tensor(labels), laufnummer, laufnummer_lge
+                Pat_lge = [torch.tensor(array, dtype=torch.float32) for array in Pat_lge]
+
+    return torch.stack(Pat), torch.stack(((Pat_lge))), torch.tensor(labels), laufnummer, laufnummer_lge
 
 # Generate tensors and labels
 patients_data, patients_data_lge, labels_tensor, laufnummer, laufnummer_lge = generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df)
