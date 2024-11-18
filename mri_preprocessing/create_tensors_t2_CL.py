@@ -40,11 +40,18 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
                 print(f"Warning: No label found for {patient}. Skipping.")
                 continue
             label = label_row['IMH_BL_Nein=0_Ja=1'].values[0]
-
+            # One-hot encode the label
+            one_hot_label = torch.zeros(2)
+            one_hot_label[int(label)] = 1
+            labels.append(one_hot_label)
+            print(labels)
             patient_volume = []
+            slice_data = []
             for image_file in sorted(slice_files):
                 image_path = os.path.join(patient_dir, image_file)
                 dat = dcm.dcmread(image_path)
+                slice_location = float(dat.SliceLocation)
+
                 print(dat.InstanceNumber)
                 image = dat.pixel_array
                 mini = min(image.shape)
@@ -59,11 +66,17 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
                 image = (image - image.min()) / (image.max() - image.min())
                 
                 patient_volume.append(torch.tensor(image, dtype=torch.float32))
-            
+                                # Append the tensor and its slice location as a tuple
+                slice_data.append((slice_location, torch.tensor(image, dtype=torch.float32)))
+
+        # Sort the slice_data list by slice location
+            slice_data = sorted(slice_data, key=itemgetter(0))
+
+        # Extract the reordered tensors
+            patient_volume = [item[1] for item in slice_data]
             padded_volume = torch.stack(patient_volume)
             print(f"Padded volume shape for {patient}: {padded_volume.shape}")
             Pat.append(padded_volume)
-            labels.append(label)
 
     # Process LGE data
     i=0
@@ -140,8 +153,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
 
                 i += 1
                 Pat_lge = [torch.tensor(array, dtype=torch.float32) for array in Pat_lge]
-
-    return torch.stack(Pat), torch.stack(((Pat_lge))), torch.tensor(labels), laufnummer, laufnummer_lge
+    return torch.stack(Pat), torch.stack(((Pat_lge))), torch.stack(labels), laufnummer, laufnummer_lge
 
 # Generate tensors and labels
 patients_data, patients_data_lge, labels_tensor, laufnummer, laufnummer_lge = generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df)
