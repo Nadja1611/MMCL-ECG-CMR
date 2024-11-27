@@ -46,7 +46,8 @@ def generate_tensors_and_labels_t2star(data_dir):
     labels = []
     patient_names = []  # Store patient names for filtering later
     max_height, max_width = 0, 0
-    
+    locations = []
+    locations_lge = []
     # First pass to find the maximum height and width across all patient images
     for patient in sorted(os.listdir(data_dir)):
         patient_volume = []
@@ -57,6 +58,7 @@ def generate_tensors_and_labels_t2star(data_dir):
                 for image_file in sorted(patient_slices):
                     image_path = os.path.join(patient_dir, image_file)
                     dat = dcm.dcmread(image_path)
+                    locations.append(dat.SliceLocation)
                     patient_volume.append(torch.tensor(dat.pixel_array, dtype=torch.float32))
                 # Find max dimensions
                 max_height = max(max_height, patient_volume[0].shape[0])

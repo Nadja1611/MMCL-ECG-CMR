@@ -24,13 +24,12 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
     valid_patients = valid_patient_rows['Laufnummer_Marina_STEMI'].astype(str)
     converted_list = [str(int(float(item))) for item in valid_patients]
 
-    for patient in sorted(os.listdir(data_dir)[:]):
+    for patient in sorted(os.listdir(data_dir)[:1]):
         if (patient.split('_')[0]) in converted_list:
             laufnummer.append(patient.split('_')[0])
             patient_dir = os.path.join(data_dir, patient)
             slice_files = [f for f in os.listdir(patient_dir) if f != '.DS_Store']
             
-            print(f"Processing {patient}: Found {len(slice_files)} slices")
             if len(slice_files) < 2:  # Skip patients with insufficient slices
                 print(f"Skipping {patient} due to insufficient slices")
                 continue
@@ -44,14 +43,14 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
             one_hot_label = torch.zeros(2)
             one_hot_label[int(label)] = 1
             labels.append(one_hot_label)
-            print(labels)
             patient_volume = []
             slice_data = []
+            slice_locations , slice_locations_lge = [], []
             for image_file in sorted(slice_files):
                 image_path = os.path.join(patient_dir, image_file)
                 dat = dcm.dcmread(image_path)
                 slice_location = float(dat.SliceLocation)
-
+                slice_locations.append(slice_location)
                 print(dat.InstanceNumber)
                 image = dat.pixel_array
                 mini = min(image.shape)
@@ -80,7 +79,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
 
     # Process LGE data
     i=0
-    for patient in sorted(os.listdir(data_dir_lge)[:]):
+    for patient in sorted(os.listdir(data_dir_lge)[:1]):
         if patient != '.DS_Store':
 
             if (patient.split('_')[0]) not in converted_list:
@@ -94,15 +93,12 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
                 print(f"Processing LGE {patient}: Found {len(slice_files)} slices")
 
                 patient_volume_lge = []
-                slice_data = []
-
                 for image_file in sorted(slice_files):
                     image_path = os.path.join(patient_dir_lge, image_file)
                     dat = dcm.dcmread(image_path)
-                    
                     # Get the slice location
                     slice_location = float(dat.SliceLocation)
-                    print(slice_location, flush=True)
+                    slice_locations_lge.append(slice_location)
                     
                     # Preprocess the image
                     image = dat.pixel_array
@@ -153,10 +149,10 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df):
 
                 i += 1
                 Pat_lge = [torch.tensor(array, dtype=torch.float32) for array in Pat_lge]
-    return torch.stack(Pat), torch.stack(((Pat_lge))), torch.stack(labels), laufnummer, laufnummer_lge
+    return torch.stack(Pat), torch.stack(((Pat_lge))), torch.stack(labels), laufnummer, laufnummer_lge, slice_locations, slice_locations_lge
 
 # Generate tensors and labels
-patients_data, patients_data_lge, labels_tensor, laufnummer, laufnummer_lge = generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df)
+patients_data, patients_data_lge, labels_tensor, laufnummer, laufnummer_lge, slice_locations, slice_locations_lge = generate_tensors_and_labels_t2star(data_dir, data_dir_lge, df)
 
 # Save processed data
 torch.save(patients_data, os.path.join(outputdir, 'processed_t2star_data.pt'))
@@ -168,6 +164,8 @@ print(f"Saved LGE data with shape {len(patients_data_lge)}")
 print(f"Saved labels with shape {labels_tensor.shape}")
 print(f"Processed patients: {len(laufnummer)}")
 print(f"Processed patients: {len(laufnummer_lge)}")
+print(f"slice locations: {slice_locations}")
+print(f"slice locations lge: {slice_locations_lge}")
 
 
 
