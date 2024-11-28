@@ -61,7 +61,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
     converted_list = [str(int(float(item))) for item in valid_patients]
     slice_locations , slice_locations_lge, slice_locations_lge_seg = [], [], []
     list_of_slice_locations_lge, list_of_slice_locations_lge_seg, list_of_slice_locations_t2 = [], [], []
-    for patient in sorted(os.listdir(data_dir)[:10]):
+    for patient in sorted(os.listdir(data_dir)[:]):
         slice_locations = []
         if (patient.split('_')[0]) in converted_list:
             laufnummer.append(patient.split('_')[0])
@@ -97,19 +97,14 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
                                 # Append the tensor and its slice location as a tuple
                 slice_data.append((slice_location, torch.tensor(image, dtype=torch.float32)))
 
-        # Sort the slice_data list by slice location
-            #slice_data = sorted(slice_data, key=itemgetter(0))
 
-        # Extract the reordered tensors
-            #patient_volume = [item[1] for item in slice_data]
             padded_volume = torch.stack(patient_volume)
-            print(f"Padded volume shape for {patient}: {padded_volume.shape}")
             Pat.append(padded_volume)
             list_of_slice_locations_t2.append(slice_locations)
 
     # Process LGE data
     j = -1
-    for patient in sorted(os.listdir(data_dir_lge)[:10]):
+    for patient in sorted(os.listdir(data_dir_lge)[:]):
         slice_locations_lge = []
         if patient != '.DS_Store':
             if (patient.split('_')[0]) not in converted_list:
@@ -134,7 +129,6 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
                     # Preprocess the image
                     image = dat.pixel_array
                     shape_lge = image.shape
-                    print('lge' + str(image.shape))
 
                     ## zero padding as some images are rectangular
                     image = constant_pad(image, 256, c=0) 
@@ -151,13 +145,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
                 for k in range(3):
                     K[k]=constant_pad(Pat[j][k], 256, 0)
                 Pat[j] = torch.tensor(K, dtype=torch.float32)  # Convert back to PyTorch tensor                
-    
-                # Sort the slice_data list by slice location
-                
-                #slice_data_lge = sorted(slice_data_lge, key=itemgetter(0))
 
-                # Extract the reordered tensors
-                #patient_volume_lge = [item[1] for item in slice_data_lge]
                                 
                 padded_volume_lge = torch.stack(patient_volume_lge)
             #    padded_volume_lge = resize(np.array(padded_volume_lge), (10, int(padded_volume_lge.shape[1]), int(padded_volume_lge.shape[2])))
@@ -166,7 +154,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
                 list_of_slice_locations_lge.append(slice_locations_lge)
     # Process LGE data
     id = -1
-    for patient in sorted(os.listdir(data_dir_lge_seg)[:10]):
+    for patient in sorted(os.listdir(data_dir_lge_seg)[:]):
         if patient != '.DS_Store':
 
             if (patient.split('_')[0]) not in converted_list:
@@ -194,7 +182,6 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
                     ## zero padding as some images are rectangular
                     image = constant_pad(image, 256, c=0) 
         
-                    image = (image - image.min()) / (image.max() - image.min())
                     patient_volume_lge_seg.append(torch.tensor(image, dtype=torch.float32))
                     # Append the tensor and its slice location as a tuple
                     slice_data_lge_seg.append((torch.tensor(image, dtype=torch.float32)))
@@ -203,14 +190,12 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
 
                                 
                 padded_volume_lge_seg = torch.stack(patient_volume_lge_seg)
-               # padded_volume_lge_seg = resize(np.array(padded_volume_lge_seg), (10, int(padded_volume_lge_seg.shape[1]), int(padded_volume_lge_seg.shape[2])))
                 print(padded_volume_lge_seg.shape)
                 Pat_lge_seg.append(padded_volume_lge_seg)
    
 
            
 
-                        # Step 1: Find the closest slices for all patients
     # Assuming `indices_list` is generated from the `find_closest_indices` function
     indices_list = find_closest_indices(list_of_slice_locations_t2, list_of_slice_locations_lge)
     print(list_of_slice_locations_lge_seg)
@@ -276,8 +261,7 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
         plt.imshow(Pat_lge[id][2], cmap = 'gray')
         plt.title(str(labels[id]))
         plt.subplot(3,3,7) 
-        plt.imshow(Pat_lge[id][0], cmap = 'gray')
-        plt.imshow(Pat_lge_seg[id][0], alpha = 0.5)
+        plt.imshow(Pat_lge[id][0]*Pat_lge_seg[id][0], cmap = 'gray')
         plt.subplot(3,3,8)
         plt.imshow(Pat_lge[id][1], cmap = 'gray')
         plt.imshow(Pat_lge_seg[id][1], alpha = 0.5)
@@ -290,15 +274,20 @@ def generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg,
 
 # Generate tensors and labels
 patients_data, patients_data_lge, patients_data_lge_seg, labels_tensor, laufnummer, laufnummer_lge, laufnummer_lge_seg, slice_locations, slice_locations_lge, slice_locations_lge_seg = generate_tensors_and_labels_t2star(data_dir, data_dir_lge, data_dir_lge_seg, df)
-
+print(torch.max(patients_data_lge_seg))
+binary_mask = torch.zeros_like(patients_data_lge_seg)
+binary_mask[patients_data_lge_seg>0]=1
+patients_data_lge_masked = patients_data_lge * binary_mask
 # Save processed data
 torch.save(patients_data, os.path.join(outputdir, 'processed_t2star_data.pt'))
 torch.save(patients_data_lge, os.path.join(outputdir, 'processed_lge_data.pt'))
 torch.save(patients_data_lge_seg, os.path.join(outputdir, 'processed_lge_seg.pt'))
+torch.save(patients_data_lge_masked, os.path.join(outputdir, 'processed_lge_ROI.pt'))
 torch.save(labels_tensor, os.path.join(outputdir, 'processed_t2star_labels.pt'))
 
 print(f"Saved T2* data with shape {patients_data.shape}")
 print(f"Saved LGE data with shape {(patients_data_lge.shape)}")
+print(f"Saved LGE seg data with shape {(patients_data_lge_seg.shape)}")
 print(f"Saved labels with shape {labels_tensor.shape}")
 print(f"Processed patients: {len(laufnummer)}")
 print(f"Processed patients: {len(laufnummer_lge)}")

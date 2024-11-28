@@ -36,27 +36,28 @@ df['Revasc_time_(dd.mm.yyyy hh:mm)'] = pd.to_datetime(df['Revasc_time_(dd.mm.yyy
 
 # Loop through the files
 i = 1
-directory = '/Users/nadjagruber/Documents/ECG_MRI_Project/ECG_preprocessed'
+directory = '/Users/nadjagruber/Documents/ECG_MRI_Project/ECG_NPZ'
 files = os.listdir(directory)
 data = []
 labels = []
-
+patientIDs = []
 for f in files:
 
     if f != '.DS_Store' and 'xlsx' not in f:
         i += 1
         # Find the corresponding label from the Excel file
       #  print(f"Laufnummer_Marina_STEMI column: {df['Laufnummer_Marina_STEMI']}")  # Print the series correctly
-        print(int(f.split('_')[-1]))
+       # print(int(f.split('_')[-1]))
         label_row = df[df['Laufnummer_Marina_STEMI'] == int(f)] # Adjusted to match f with Laufnummer
-        print(label_row)
-        print(int(f) in df['Laufnummer_Marina_STEMI'])
-        #print( df['Laufnummer_Marina_STEMI'] )
-        if not label_row.empty:
+       # print(label_row)
+       # print(int(f) in df['Laufnummer_Marina_STEMI'])
+        print( df['Laufnummer_Marina_STEMI'] )
+        if not label_row.empty and (label_row['IMH_BL_Nein=0_Ja=1'].values[0]) in [0, 1]:
             label = label_row['IMH_BL_Nein=0_Ja=1'].values[0]
             revasc_date = label_row['Revasc_time_(dd.mm.yyyy hh:mm)'].values[0]
             # Convert the revasc_date to datetime
             revasc_datetime = pd.to_datetime(revasc_date)
+            patientIDs.append(f)
         else:
             print(f"Warning: No label found for {f}. Skipping this file.")
             continue
@@ -68,16 +69,16 @@ for f in files:
         
             # Filter the .npy files in ecg_dates and find the closest to revasc date
         ecg_dates = os.listdir(os.path.join(directory, f))
-        ecg_dates = [e for e in ecg_dates if e.endswith('npy')]
+        print(ecg_dates)
+        ecg_dates = [e for e in ecg_dates if e.endswith('npz')]
         
         closest_file = None
         smallest_diff = float('inf')
         
         for ecg_file in ecg_dates:
             # Extract datetime from file name format "laufnummer_yyyymmdd_hhmmss.npy"
-            file_datetime_str = '_'.join(ecg_file.split('_')[1:3]).replace('.npy', '')
+            file_datetime_str = '_'.join(ecg_file.split('_')[1:3]).replace('.npz', '')
             file_datetime = datetime.strptime(file_datetime_str, '%Y%m%d_%H%M%S')
-            
             # Calculate the time difference, only if the file is after the revasc date
             if file_datetime > revasc_datetime:
                 time_diff = (file_datetime - revasc_datetime).total_seconds()
@@ -92,7 +93,7 @@ for f in files:
         # Now load and process only the closest file
         if closest_file:
             path = os.path.join(directory, f)
-            np_data = np.load(os.path.join(path, closest_file))
+            np_data = np.load(os.path.join(path, closest_file))['ecg']
             np_data = np.transpose(np_data)
 
             # Assume `np_data` is array of shape (12, 2500)
@@ -145,6 +146,7 @@ for f in files:
             plt.legend()
             plt.savefig(os.path.join(tensor_save_dir, f"tensor_{i}.png"))
             plt.close()
+            print('ecg ' + str(i) + ' saved in' + os.path.join(tensor_save_dir, f"tensor_{i}.png"))
 
 data_np = np.asarray(data)
 data_torch = torch.tensor(data_np)
@@ -159,4 +161,7 @@ torch.save(data_torch[:50], os.path.join(tensor_save_dir + '/train', "tensor.pt"
 
 torch.save(lab[50:], os.path.join(label_save_dir + '/val', "labels.pt"))
 torch.save(data_torch[50:], os.path.join(tensor_save_dir + '/val', "tensor.pt"))
-print(data_torch.to(torch.float32).dtype)
+#print(data_torch.to(torch.float32).dtype)
+
+print(i)
+print(patientIDs)
