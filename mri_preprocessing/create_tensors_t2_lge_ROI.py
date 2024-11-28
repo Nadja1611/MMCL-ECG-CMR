@@ -296,7 +296,23 @@ print(f"slice locations: {slice_locations}")
 print(f"slice locations lge: {len(slice_locations_lge)}")
 print(f"slice locations lge_seg: {len(slice_locations_lge_seg)}")
 
+# Create a dictionary with all the data
+data_dict = {
+    "patients_data_t2star": patients_data,
+    "patients_data_lge": patients_data_lge,
+    "patients_data_lge_seg": patients_data_lge_seg,
+    "patients_data_lge_masked": patients_data_lge_masked,
+    "labels_tensor": labels_tensor,
+    "laufnummer": laufnummer,
+    "laufnummer_lge": laufnummer_lge,
+    "laufnummer_lge_seg": laufnummer_lge_seg,
+    "slice_locations": slice_locations,
+    "slice_locations_lge": slice_locations_lge,
+    "slice_locations_lge_seg": slice_locations_lge_seg
+}
 
+# Save the dictionary to a file
+torch.save(data_dict, os.path.join(outputdir, 'processed_data_dict.pt'))
 
 
 list1 = slice_locations_lge
