@@ -4,12 +4,12 @@ import torch
 import matplotlib.pyplot as plt
 from airPLS import airPLS
 import pandas as pd
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 
 
-
+results = []
 ''' this is the script for the preprocessing of the ECG data and extraction of label of the excel file'''
 # Directory to save the tensor and label .pt files
 tensor_save_dir = '/Users/nadjagruber/Documents/ECG_MRI_Project/ecg_preprocessing_codes/data/IMH_tensors/'
@@ -51,8 +51,9 @@ for f in files:
         label_row = df[df['Laufnummer_Marina_STEMI'] == int(f)] # Adjusted to match f with Laufnummer
        # print(label_row)
        # print(int(f) in df['Laufnummer_Marina_STEMI'])
-        print( df['Laufnummer_Marina_STEMI'] )
         if not label_row.empty and (label_row['IMH_BL_Nein=0_Ja=1'].values[0]) in [0, 1]:
+            print(f )
+
             label = label_row['IMH_BL_Nein=0_Ja=1'].values[0]
             revasc_date = label_row['Revasc_time_(dd.mm.yyyy hh:mm)'].values[0]
             # Convert the revasc_date to datetime
@@ -65,7 +66,6 @@ for f in files:
         # One-hot encode the label
         one_hot_label = torch.zeros(2)
         one_hot_label[int(label)] = 1
-        labels.append(one_hot_label)
         
             # Filter the .npy files in ecg_dates and find the closest to revasc date
         ecg_dates = os.listdir(os.path.join(directory, f))
@@ -75,23 +75,43 @@ for f in files:
         closest_file = None
         smallest_diff = float('inf')
         
+
         for ecg_file in ecg_dates:
-            # Extract datetime from file name format "laufnummer_yyyymmdd_hhmmss.npy"
-            file_datetime_str = '_'.join(ecg_file.split('_')[1:3]).replace('.npz', '')
+            # Extract datetime from file name in the format "laufnummer_yyyymmdd_hhmmss.npy"
+            file_datetime_str = '_'.join(ecg_file.split('_')[1:3]).split('.')[0]
             file_datetime = datetime.strptime(file_datetime_str, '%Y%m%d_%H%M%S')
-            # Calculate the time difference, only if the file is after the revasc date
-            if file_datetime > revasc_datetime:
-                time_diff = (file_datetime - revasc_datetime).total_seconds()
-                
-                # Update if this file is the closest so far after revasc
+
+            # Define the valid time window (30 minutes before to 6 hours after revasc_datetime)
+            lower_bound = revasc_datetime - timedelta(hours=1)
+            upper_bound = revasc_datetime + timedelta(hours=6)
+
+            # Check if the file's datetime is within the valid window
+            if lower_bound <= file_datetime <= upper_bound:
+                time_diff = abs((file_datetime - revasc_datetime).total_seconds())
+
+                # Update if this file is the closest so far
                 if time_diff < smallest_diff:
                     smallest_diff = time_diff
                     closest_file = ecg_file
 
-        print(f"Closest file to revasc date {revasc_datetime} is: {closest_file}")
+        if closest_file:
+            print(f"Closest file: {closest_file}")
+        else:
+            print("No matching date found within the specified time window.")
+
         
         # Now load and process only the closest file
         if closest_file:
+            results.append({
+            'Name': f,
+            'Closest File': closest_file,
+            'Revasc DateTime': revasc_datetime, 
+            'IMH label': label
+            })
+            labels.append(one_hot_label)
+
+
+
             path = os.path.join(directory, f)
             np_data = np.load(os.path.join(path, closest_file))['ecg']
             np_data = np.transpose(np_data)
@@ -147,7 +167,9 @@ for f in files:
             plt.savefig(os.path.join(tensor_save_dir, f"tensor_{i}.png"))
             plt.close()
             print('ecg ' + str(i) + ' saved in' + os.path.join(tensor_save_dir, f"tensor_{i}.png"))
-
+            # Convert results to a DataFrame and write to Excel
+            df1 = pd.DataFrame(results)
+            df1.to_excel('/Users/nadjagruber/Documents/ECG_MRI_Project/Github/MMCL-ECG-CMR/ecg_preprocessing/summary_ecg_data_revasctime_labelpresent.xlsx', index=False)
 data_np = np.asarray(data)
 data_torch = torch.tensor(data_np)
 
